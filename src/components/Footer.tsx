@@ -29,6 +29,9 @@ export function Footer() {
             </div>
             <div className="foot-col">
               <h4 className="mono">外面</h4>
+              <a href={LINKS.blog} target="_blank" rel="noreferrer">
+                作者的博客 ↗
+              </a>
               <a href={LINKS.source} target="_blank" rel="noreferrer">
                 主仓库 ↗
               </a>

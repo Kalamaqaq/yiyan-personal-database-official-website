@@ -30,6 +30,8 @@ export const LINKS = {
   websiteRepo:
     'https://github.com/sideonkeibulllll/yiyan-personal-database-official-website',
   issues: 'https://github.com/sideonkeibulllll/yiyan-personal-database/issues',
+  /** 作者平时写字的地方，比 GitHub 更适合「想找到人」这件事 */
+  blog: 'https://blog.8765777.xyz',
 };
 
 /** 12.55 MB —— 按 MiB 换算，和浏览器显示的体积一致 */

@@ -18,7 +18,7 @@ export function Closing() {
           </Reveal>
         </h2>
         <Reveal delay={240}>
-          <p className="closing-sub">一个自己用的东西，顺手放上来。要不要都行。</p>
+          <p className="closing-sub">一个自己用的东西，顺手放上来。不下也不影响什么。</p>
         </Reveal>
       </div>
     </section>

@@ -49,7 +49,7 @@ export function SpecSheet() {
         </dl>
 
         <Reveal delay={80}>
-          <p className="spec-note mono">— 就这些。没有藏起来的第九条。 —</p>
+          <p className="spec-note mono">— 就这些。没有藏起来的第九条，也没有小字条款。 —</p>
         </Reveal>
       </div>
     </section>

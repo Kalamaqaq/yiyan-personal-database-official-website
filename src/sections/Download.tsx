@@ -69,8 +69,8 @@ export function DownloadSection() {
           <div className="dl-left">
             <Reveal delay={100}>
               <p className="lede dl-lede">
-                免费。没有广告、没有会员、没有「升级到专业版」。
-                我也不会拿到你的任何一条内容。
+                免费。没有广告，没有会员，没有「升级到专业版」的弹窗。
+                你装完就跟我没关系了 —— 这大概是件好事。
               </p>
             </Reveal>
 
@@ -158,11 +158,11 @@ export function DownloadSection() {
               </div>
               <div>
                 <h4 className="mono">Windows 桌面版</h4>
-                <p>存在，但停在 2.0.4，比 Android 版旧一大截，不建议现在用。</p>
+                <p>存在，但停在 2.0.4，比 Android 版旧一大截。建议假装它不存在。</p>
               </div>
               <div>
                 <h4 className="mono">iOS</h4>
-                <p>没有。</p>
+                <p>没有，也不打算有。</p>
               </div>
             </div>
 

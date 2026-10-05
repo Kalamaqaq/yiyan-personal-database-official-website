@@ -114,7 +114,7 @@ export function HeroDemo() {
                 setText(STARTER_LINES[Math.floor(Math.random() * STARTER_LINES.length)])
               }
             >
-              用一句现成的
+              偷一句现成的
             </button>
           </>
         ) : (

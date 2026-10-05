@@ -38,11 +38,19 @@ export function Maker() {
                 {MAKER.map((m) => (
                   <div key={m.k}>
                     <dt className="mono">{m.k}</dt>
-                    <dd>{m.v}</dd>
+                    <dd>
+                      {m.href ? (
+                        <a className="mk-link" href={m.href} target="_blank" rel="noreferrer">
+                          {m.v} ↗
+                        </a>
+                      ) : (
+                        m.v
+                      )}
+                    </dd>
                   </div>
                 ))}
                 <div>
-                  <dt className="mono">你可以验证</dt>
+                  <dt className="mono">可以验证</dt>
                   <dd>
                     <a className="mk-link" href={LINKS.source} target="_blank" rel="noreferrer">
                       去看提交记录 ↗
@@ -51,9 +59,7 @@ export function Maker() {
                 </div>
               </dl>
 
-              <p className="mk-close">
-                没什么故事。
-              </p>
+              <p className="mk-close">没什么故事。真的。</p>
             </div>
           </div>
         </Reveal>
