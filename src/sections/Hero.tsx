@@ -1,62 +1,66 @@
 import { Reveal } from '../components/Reveal';
-import { Butterfly } from '../components/Butterfly';
 import { HeroDemo } from './HeroDemo';
-import { APP_SIZE_NOTE } from './copy';
+import { ZigzagBand, DotCluster, Star, Ring, Triangle, Plus, Squiggle } from '../components/Geo';
+import { HERO } from './copy';
 import './Hero.css';
 
 export function Hero() {
   return (
     <section className="hero" id="hero">
-      <div className="hero-amb" aria-hidden="true">
-        <Butterfly className="amb amb-1" size={26} />
-        <Butterfly className="amb amb-2" size={15} color="var(--blue-deep)" />
-        <Butterfly className="amb amb-3" size={19} />
-        <Butterfly className="amb amb-4" size={12} color="var(--blue-deep)" />
+      {/* 几何拼贴：贴纸一样撒在版面四周，全部 aria-hidden */}
+      <div className="hero-deco" aria-hidden="true">
+        <DotCluster className="d d1" size={120} color="var(--pink)" />
+        <Star className="d d2" size={62} color="var(--yellow)" />
+        <Ring className="d d3" size={54} color="var(--cyan)" />
+        <Triangle className="d d4" size={40} color="var(--violet)" />
+        <Plus className="d d5" size={30} color="var(--cyan)" />
+        <Squiggle className="d d6" width={130} height={22} color="var(--pink)" />
+        <DotCluster className="d d7" size={80} color="var(--cyan)" />
       </div>
 
       <div className="shell hero-grid">
         <div className="hero-copy">
-          <Reveal className="hero-eyebrow">
-            <span className="eyebrow">
-              <span className="no">01</span>
-              <em>一个不会帮你整理的私人记忆库</em>
-            </span>
+          <Reveal className="hero-badges">
+            <div className="hero-badges-row">
+              {HERO.badge.map((b, i) => (
+                <span className={`tag ${i === 0 ? 'tag-pink' : i === 1 ? 'tag-cyan' : 'tag-yellow'}`} key={b}>
+                  {b}
+                </span>
+              ))}
+            </div>
           </Reveal>
 
           <h1 className="display hero-title">
             <Reveal tag="span" mask className="line">
-              把过去，
+              扔进来，
             </Reveal>
             <Reveal tag="span" mask className="line" delay={130}>
-              还给你。
+              然后<span className="mark">忘掉它</span>。
             </Reveal>
           </h1>
 
-          <Reveal delay={300} className="hero-sub">
+          <Reveal delay={280} className="hero-sub">
             <p className="lede">
-              你在某个深夜随手扔进去的一句话，
+              {HERO.sub[0]}
               <br />
-              会在某一天，自己回来找你。
+              {HERO.sub[1]}
             </p>
           </Reveal>
 
-          <Reveal delay={420} className="hero-meta mono">
-            {APP_SIZE_NOTE.map((m) => (
-              <span key={m}>{m}</span>
-            ))}
+          <Reveal delay={380} className="hero-hint">
+            <span className="mono">{HERO.demoHint}</span>
           </Reveal>
         </div>
 
         <div className="hero-demo-wrap">
-          <Reveal delay={220}>
+          <Reveal delay={180}>
             <HeroDemo />
           </Reveal>
         </div>
       </div>
 
-      <div className="hero-foot shell">
-        <span className="mono dim">往下看 · 它为什么值得存在</span>
-        <span className="hero-rule" aria-hidden="true" />
+      <div className="hero-zz" aria-hidden="true">
+        <ZigzagBand color="var(--pink)" />
       </div>
     </section>
   );

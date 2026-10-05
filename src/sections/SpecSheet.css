@@ -1,0 +1,90 @@
+.spec {
+  position: relative;
+  overflow: hidden;
+}
+
+.spec-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.spec-deco .sd1 {
+  right: -18px;
+  top: 18%;
+  opacity: 0.4;
+  transform: rotate(14deg);
+}
+
+.spec-deco .sd2 {
+  left: 2%;
+  bottom: 8%;
+  opacity: 0.7;
+}
+
+.spec-title {
+  margin: 22px 0 clamp(32px, 4vw, 50px);
+}
+
+.spec-title .line {
+  display: block;
+}
+
+/* 参数表：左标签是一颗胶囊，右边一句人话 */
+.spec-list {
+  margin: 0;
+  border-top: 3px solid var(--ink);
+}
+
+.spec-row {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  padding: 18px 12px;
+  border-bottom: 3px solid var(--ink);
+  transition: background 0.22s var(--ease);
+}
+
+.spec-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.spec-k {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--r-btn);
+  border: 2.5px solid var(--ink);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--ink);
+  justify-self: start;
+  white-space: nowrap;
+}
+
+.spec-v {
+  margin: 0;
+  font-size: clamp(14px, 1.5vw, 16.5px);
+  line-height: 1.7;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.spec-note {
+  margin-top: 26px;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-4);
+}
+
+@media (max-width: 700px) {
+  .spec-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    padding: 16px 4px;
+  }
+}

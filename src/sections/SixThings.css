@@ -1,0 +1,279 @@
+.six-title {
+  margin: 22px 0 clamp(34px, 4.4vw, 56px);
+  max-width: 16em;
+}
+
+.six-title .line {
+  display: block;
+}
+
+.six-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.six-card {
+  min-width: 0;
+}
+
+/* 每张卡都歪一点、换一种霓虹硬阴影 —— 拼贴感就是这么来的 */
+.six-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px 20px 20px;
+  border: 3px solid var(--ink);
+  border-radius: var(--r-card);
+  background: var(--panel);
+  box-shadow: 8px 8px 0 var(--sh);
+  transform: rotate(var(--tilt));
+  transition:
+    transform 0.22s var(--pop),
+    box-shadow 0.22s var(--pop);
+}
+
+.six-inner:hover {
+  transform: rotate(0deg) translate(-3px, -3px);
+  box-shadow: 11px 11px 0 var(--sh);
+}
+
+.six-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.six-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--sh);
+  color: var(--bg);
+  font-size: 12px;
+  font-weight: 700;
+  border: 2px solid var(--ink);
+}
+
+.six-own {
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  color: var(--ink-4);
+  text-align: right;
+}
+
+.six-h {
+  color: var(--ink);
+}
+
+.six-b {
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--ink-2);
+  flex: 1 1 auto;
+}
+
+.six-viz {
+  margin-top: 4px;
+  padding-top: 14px;
+  border-top: 2px dashed rgba(255, 255, 255, 0.16);
+  min-height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.six-viz svg {
+  width: 100%;
+  height: 84px;
+  display: block;
+}
+
+/* ——— 六张小模型 ——— */
+
+.mock {
+  width: 100%;
+}
+
+.mock-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mi-field {
+  flex: 1 1 auto;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: var(--r-btn);
+  border: 2.5px solid var(--ink);
+  background: var(--bg);
+  color: var(--ink-4);
+  font-size: 12.5px;
+}
+
+.mi-send {
+  flex: 0 0 auto;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-radius: var(--r-btn);
+  background: var(--pink);
+  color: #fff;
+  font-weight: 800;
+  font-size: 12.5px;
+  border: 2.5px solid var(--ink);
+}
+
+.mock-weights {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.wr {
+  display: grid;
+  grid-template-columns: 76px 1fr 26px;
+  align-items: center;
+  gap: 10px;
+}
+
+.wr-l {
+  font-size: 10px;
+  color: var(--ink-3);
+}
+
+.wr-n {
+  font-size: 10px;
+  color: var(--ink-4);
+  text-align: right;
+}
+
+/* 权重条随卡片进场一起「长出来」 */
+.wr-bar {
+  height: 12px;
+  border-radius: 6px;
+  border: 2px solid var(--ink);
+  width: calc(var(--w) / 3 * 100%);
+  background: var(--cyan);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.75s var(--pop) 0.12s;
+}
+
+.wr:nth-child(2) .wr-bar {
+  background: var(--yellow);
+  transition-delay: 0.24s;
+}
+.wr:nth-child(3) .wr-bar {
+  background: var(--pink);
+  transition-delay: 0.36s;
+}
+
+.six-card.in .wr-bar {
+  transform: scaleX(1);
+}
+
+.mock-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tl-track {
+  position: relative;
+  height: 28px;
+  border-radius: 8px;
+  border: 2.5px solid var(--ink);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.tl-block {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-right: 2px solid var(--bg);
+}
+
+.tl-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9.5px;
+  color: var(--ink-4);
+}
+
+.mock-memo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.mm-src {
+  margin: 0;
+  padding: 5px 9px;
+  border-radius: 8px;
+  background: rgba(18, 230, 200, 0.14);
+  border: 2px solid var(--cyan);
+  color: var(--cyan);
+  font-size: 11px;
+}
+
+.mm-out {
+  margin: 0;
+  padding-left: 4px;
+  color: var(--ink);
+}
+
+.mm-out strong {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.mm-dim {
+  color: var(--ink-3);
+  font-size: 11.5px;
+}
+
+.wheel-spin {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  animation: wheelTurn 22s linear infinite;
+}
+
+.six-inner:hover .wheel-spin {
+  animation-duration: 2.6s;
+}
+
+@keyframes wheelTurn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1020px) {
+  .six-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .six-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+  .six-inner {
+    transform: none;
+    box-shadow: 6px 6px 0 var(--sh);
+  }
+}

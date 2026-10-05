@@ -1,64 +1,84 @@
 /* ==========================================================================
    记忆库官网 · 设计系统
    --------------------------------------------------------------------------
-   全站零 Web 字体。中文依赖系统字体的真实形态（PingFang / 鸿蒙 / 雅黑），
-   拉丁与数字走等宽 —— 用「黑体 + 等宽」的反差建立冷静、克制的仪器感，
-   同时把首屏体积压到 0 外部请求。这是本站在国内网络下的性能底线。
+   暗色孟菲斯（Memphis / 80s 后现代）：
+   暖调深炭灰打底 · 粉青黄三色霓虹撞色 · 纯色硬阴影 · 几何色块拼贴 ·
+   不规则波点与锯齿线 · 20px 胶囊按钮 · 粗体几何无衬线 + 白色正文。
+
+   仍然坚持两条工程底线（与风格无关）：
+   1. 不引入任何 Web 字体 —— 中文用系统黑体加粗，拉丁与数字走 Arial Black，
+      这是 80 年代海报体的最近似解，且体积为 0。
+   2. 不引入任何第三方 CDN —— 目标读者在国内网络环境下。
    ========================================================================== */
 
 :root {
-  /* —— 夜色梯度：整站的地面 —— */
-  --night-1000: #04060c;
-  --night-950: #050810;
-  --night-900: #070a12;
-  --night-850: #0b0f1a;
-  --night-800: #101524;
-  --night-750: #161c2e;
-  --night-700: #1e2539;
+  /* —— 背景：接近黑但偏暖，四层递进 —— */
+  --bg: #17120f;
+  --bg-2: #1e1815;
+  --panel: #241c17;
+  --panel-2: #2e2320;
+  --panel-3: #3a2c27;
 
-  /* —— 文字 —— */
-  --ink: #eef0f7;
-  --ink-2: #a9b1c5;
-  --ink-3: #737b91;
-  --ink-4: #4b5266;
+  /* —— 三色霓虹 + 两个副色 —— */
+  --pink: #ff2e88;
+  --pink-d: #c01363;
+  --cyan: #12e6c8;
+  --cyan-d: #0a9c88;
+  --yellow: #ffd400;
+  --yellow-d: #c9a300;
+  --violet: #9b6bff;
+  --lime: #b6ff3a;
 
-  /* —— 两条谱线：蝴蝶蓝（记忆本身）+ 流苏金（被人记住的部分）—— */
-  --blue: #5b84ff;
-  --blue-soft: #8fb0ff;
-  --blue-deep: #2b47a8;
-  --gold: #d9a85c;
-  --gold-soft: #f0ce92;
+  /* —— 文字：白为主 —— */
+  --ink: #ffffff;
+  --ink-2: #cdc2bb;
+  --ink-3: #93857d;
+  --ink-4: #6b5f59;
 
-  /* —— 描边：只用极细的、带透明度的白 —— */
-  --line: rgba(255, 255, 255, 0.07);
-  --line-2: rgba(255, 255, 255, 0.12);
-  --line-3: rgba(255, 255, 255, 0.2);
+  /* —— 描边 —— */
+  --line: rgba(255, 255, 255, 0.12);
+  --line-2: rgba(255, 255, 255, 0.22);
+
+  /* —— 硬阴影：孟菲斯的签名，永远不带模糊 —— */
+  --sh-pink: 7px 7px 0 var(--pink);
+  --sh-cyan: 7px 7px 0 var(--cyan);
+  --sh-yellow: 7px 7px 0 var(--yellow);
+  --sh-violet: 7px 7px 0 var(--violet);
+  --sh-dark: 7px 7px 0 rgba(0, 0, 0, 0.55);
 
   /* —— 字体 —— */
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
     "HarmonyOS Sans SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC",
-    "Source Han Sans SC", sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", "JetBrains Mono",
-    Menlo, Consolas, "Liberation Mono", monospace;
+    sans-serif;
+  --font-display: "Arial Black", "Arial Bold", "Helvetica Neue", "Segoe UI Black",
+    "PingFang SC", "Microsoft YaHei", var(--font-sans);
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
 
-  /* —— 节奏 —— */
-  --shell: 1140px;
+  /* —— 圆角：按钮明确 20px 胶囊 —— */
+  --r-btn: 20px;
+  --r-card: 20px;
+  --r-sm: 10px;
+
+  --shell: 1160px;
   --gutter: 24px;
-  --radius: 14px;
-  --radius-lg: 22px;
 
-  /* —— 缓动：一条有性格的曲线，全站统一 —— */
+  /* —— 弹性缓动：孟菲斯要「弹」，不要「滑」 —— */
+  --pop: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 @media (max-width: 720px) {
   :root {
     --gutter: 18px;
+    --sh-pink: 5px 5px 0 var(--pink);
+    --sh-cyan: 5px 5px 0 var(--cyan);
+    --sh-yellow: 5px 5px 0 var(--yellow);
+    --sh-violet: 5px 5px 0 var(--violet);
+    --sh-dark: 5px 5px 0 rgba(0, 0, 0, 0.55);
   }
 }
 
-/* 超大屏不要只剩两团黑：放宽版心，让构图继续成立 */
 @media (min-width: 1600px) {
   :root {
     --shell: 1280px;
@@ -74,7 +94,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* 尊重系统的减弱动效设置 —— 无障碍底线，不是可选项 */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -90,52 +109,39 @@ html {
 
 body {
   margin: 0;
-  background: var(--night-900);
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: 16px;
-  line-height: 1.75;
-  font-weight: 400;
+  line-height: 1.7;
   letter-spacing: 0.01em;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* 夜空：三团极暗的光，让黑色不至于死板 */
+/* 暖炭底色上的不规则波点。
+   ⚠️ 这里必须是「硬边点」，不能用 radial-gradient(soft) ——
+      柔边大光斑会在暖炭底上糊成一团绿/酒红的脏色，一眼就是事故，
+      而孟菲斯本来就只有硬边图形。 */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background:
-    radial-gradient(
-      1100px 620px at 78% -8%,
-      rgba(91, 132, 255, 0.14),
-      transparent 62%
-    ),
-    radial-gradient(
-      780px 520px at 6% 26%,
-      rgba(217, 168, 92, 0.06),
-      transparent 66%
-    ),
-    radial-gradient(
-      900px 700px at 50% 118%,
-      rgba(91, 132, 255, 0.08),
-      transparent 68%
-    );
-}
-
-/* 纸纹：3% 的颗粒，避免大面积纯色显得廉价 */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image:
+    radial-gradient(circle at center, rgba(255, 46, 136, 0.5) 3px, transparent 3.4px),
+    radial-gradient(circle at center, rgba(18, 230, 200, 0.42) 2.4px, transparent 2.8px),
+    radial-gradient(circle at center, rgba(255, 212, 0, 0.36) 4px, transparent 4.5px);
+  background-size:
+    148px 148px,
+    197px 197px,
+    263px 263px;
+  background-position:
+    14px 28px,
+    96px 118px,
+    180px 66px;
+  opacity: 0.5;
 }
 
 #root {
@@ -149,7 +155,9 @@ h3,
 h4,
 p,
 figure,
-blockquote {
+blockquote,
+ol,
+ul {
   margin: 0;
 }
 
@@ -172,12 +180,12 @@ img {
 }
 
 ::selection {
-  background: rgba(91, 132, 255, 0.34);
-  color: #fff;
+  background: var(--yellow);
+  color: var(--bg);
 }
 
 /* ==========================================================================
-   排版基调
+   排版
    ========================================================================== */
 
 .shell {
@@ -195,68 +203,70 @@ img {
 
 .sec {
   position: relative;
-  padding: clamp(84px, 11vw, 168px) 0;
+  padding: clamp(74px, 9vw, 132px) 0;
 }
 
-/* 章节眉标：序号 + 名称，用等宽体建立编辑感 */
+/* 章节眉标：一个霓虹圆形编号 + 白字标签 */
 .eyebrow {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 14px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  color: var(--ink-3);
-  text-transform: uppercase;
+  gap: 12px;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  color: var(--ink);
 }
 
-.eyebrow span.no {
-  color: var(--blue);
+.eyebrow .no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--pink);
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 0;
+  font-family: var(--font-display);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
 }
 
 .eyebrow em {
   font-style: normal;
   color: var(--ink-2);
-  letter-spacing: 0.14em;
+  font-weight: 700;
 }
 
-.hair {
-  height: 1px;
-  border: 0;
-  margin: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--line-2) 12%,
-    var(--line-2) 88%,
-    transparent
-  );
+.display,
+.h2 {
+  font-family: var(--font-display);
+  font-weight: 400; /* Arial Black 本身已是最重一档，不必再叠 */
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
-/* 显示级标题：字距收紧，行高压缩，尺寸用 clamp 撑满视口节奏 */
 .display {
-  font-size: clamp(38px, 7.4vw, 92px);
+  font-size: clamp(34px, 6.3vw, 74px);
   line-height: 1.06;
-  letter-spacing: -0.035em;
-  font-weight: 500;
 }
 
 .h2 {
-  font-size: clamp(28px, 4.2vw, 50px);
-  line-height: 1.22;
-  letter-spacing: -0.028em;
-  font-weight: 500;
+  font-size: clamp(26px, 4vw, 46px);
+  line-height: 1.16;
 }
 
 .h3 {
-  font-size: clamp(19px, 2vw, 23px);
-  line-height: 1.45;
-  letter-spacing: -0.012em;
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: clamp(17px, 1.7vw, 20px);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
 }
 
 .lede {
-  font-size: clamp(15px, 1.5vw, 18px);
+  font-size: clamp(15px, 1.5vw, 17.5px);
   line-height: 1.85;
   color: var(--ink-2);
 }
@@ -265,31 +275,26 @@ img {
   color: var(--ink-3);
 }
 
-/* 关键词下划：一条会呼吸的金线
-   用 background 而不是伪元素 + z-index —— 后者会被页面背景层吃掉，实测发黑 */
+/* 关键词：直接上一块黄底黑字。孟菲斯没有「含蓄高亮」这回事
+   nowrap 是为了让高亮块永远不跨行断开（跨行会被 box-decoration-break 切成两块，很难看） */
 .mark {
+  background: var(--yellow);
+  color: var(--bg);
+  padding: 0 0.14em 0.04em;
+  border-radius: 8px;
   white-space: nowrap;
-  color: var(--ink);
-  background-image: linear-gradient(
-    90deg,
-    rgba(217, 168, 92, 0.62),
-    rgba(217, 168, 92, 0.16)
-  );
-  background-repeat: no-repeat;
-  background-size: 100% 0.42em;
-  background-position: 0 90%;
 }
 
 /* ==========================================================================
-   进场动效：一次性写入 class，靠 IntersectionObserver 触发
+   进场动效：带回弹的弹入，而不是优雅的淡入
    ========================================================================== */
 
 .rv {
   opacity: 0;
-  transform: translate3d(0, 22px, 0);
+  transform: translate3d(0, 26px, 0) scale(0.985);
   transition:
-    opacity 0.9s var(--ease),
-    transform 0.9s var(--ease);
+    opacity 0.62s var(--pop),
+    transform 0.62s var(--pop);
   transition-delay: var(--d, 0ms);
   will-change: opacity, transform;
 }
@@ -299,26 +304,27 @@ img {
   transform: none;
 }
 
-/* 揭幕式标题：像拉开幕布一样从下往上露出
-   —— 裁剪必须落在内层 .mi 上，外层只负责被观察（见 Reveal.tsx 的注释） */
+/* 揭幕：外层被观察（不裁剪），内层 .mi 做裁剪与位移
+   ⚠️ 不要把 clip-path 写在被 IntersectionObserver 观察的元素上，
+      否则交叉比例恒为 0，永远不触发（实测踩过） */
 .rv-mask .mi {
   display: block;
-  clip-path: inset(0 0 105% 0);
-  transform: translate3d(0, 0.36em, 0);
+  clip-path: inset(0 0 108% 0);
+  transform: translate3d(0, 0.4em, 0) rotate(-1.2deg);
+  transform-origin: 0 100%;
   transition:
-    clip-path 1.05s var(--ease),
-    transform 1.05s var(--ease);
+    clip-path 0.8s var(--pop),
+    transform 0.8s var(--pop);
   transition-delay: var(--d, 0ms);
 }
 
 .rv-mask.in .mi {
-  clip-path: inset(-25% -12% -25% -12%);
+  clip-path: inset(-30% -14% -30% -14%);
   transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .rv,
-  .rv-mask,
   .rv-mask .mi {
     opacity: 1;
     transform: none;
@@ -330,50 +336,78 @@ img {
    通用件
    ========================================================================== */
 
+/* 20px 胶囊按钮 + 霓虹填充 + 硬阴影；按下时整体「陷进去」 */
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  height: 54px;
+  height: 52px;
   padding: 0 26px;
-  border-radius: 999px;
+  border-radius: var(--r-btn);
+  font-family: var(--font-sans);
+  font-weight: 800;
   font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
+  background: var(--pink);
+  color: #fff;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.55);
   transition:
-    transform 0.35s var(--ease),
-    background 0.35s var(--ease),
-    border-color 0.35s var(--ease),
-    color 0.35s var(--ease);
+    transform 0.16s var(--pop),
+    box-shadow 0.16s var(--pop),
+    background 0.2s var(--ease);
+}
+
+/* 光泽：左上角一道斜高光，模拟塑料贴纸的反光 */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    112deg,
+    rgba(255, 255, 255, 0.42) 0 13%,
+    rgba(255, 255, 255, 0) 13.5% 100%
+  );
+  pointer-events: none;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.55);
 }
 
 .btn:active {
-  transform: scale(0.975);
+  transform: translate(5px, 5px);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.55);
 }
 
-.btn-primary {
-  background: var(--ink);
-  color: #06080f;
+.btn-yellow {
+  background: var(--yellow);
+  color: var(--bg);
 }
-.btn-primary:hover {
-  background: #fff;
+.btn-cyan {
+  background: var(--cyan);
+  color: var(--bg);
 }
 
-.btn-ghost {
-  border: 1px solid var(--line-2);
-  color: var(--ink-2);
-}
-.btn-ghost:hover {
-  border-color: var(--line-3);
+/* 描边款：底色给一层实心面板，否则透明底 + 硬阴影会读成「两个按钮叠在一起」 */
+.btn-line {
+  background: var(--panel);
   color: var(--ink);
+  border: 2.5px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--cyan);
+}
+.btn-line:hover {
+  background: var(--panel-2);
 }
 
 .btn .ar {
   font-family: var(--font-mono);
   font-size: 13px;
-  opacity: 0.55;
-  transition: transform 0.35s var(--ease);
+  opacity: 0.7;
+  transition: transform 0.2s var(--pop);
 }
 .btn:hover .ar {
   transform: translateX(3px);
@@ -383,44 +417,42 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  height: 26px;
-  padding: 0 11px;
-  border: 1px solid var(--line-2);
-  border-radius: 999px;
-  font-family: var(--font-mono);
+  height: 28px;
+  padding: 0 12px;
+  border: 2px solid var(--ink);
+  border-radius: var(--r-btn);
+  font-family: var(--font-sans);
+  font-weight: 800;
   font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--ink-3);
+  letter-spacing: 0.06em;
+  color: var(--ink);
 }
 
 .dot {
-  width: 5px;
-  height: 5px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--blue);
-  box-shadow: 0 0 0 0 rgba(91, 132, 255, 0.6);
-  animation: dotpulse 2.6s var(--ease-in-out) infinite;
+  background: var(--cyan);
+  animation: dotpulse 1.8s var(--pop) infinite;
 }
 
 @keyframes dotpulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(91, 132, 255, 0.5);
+    transform: scale(1);
     opacity: 1;
   }
-  60% {
-    box-shadow: 0 0 0 7px rgba(91, 132, 255, 0);
-    opacity: 0.75;
+  50% {
+    transform: scale(0.55);
+    opacity: 0.55;
   }
 }
 
+/* 卡片：面板色 + 硬描边 + 纯色硬阴影（阴影颜色由使用处指定） */
 .card {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.032),
-    rgba(255, 255, 255, 0.008)
-  );
-  backdrop-filter: blur(6px);
+  position: relative;
+  border: 2.5px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--r-card);
+  background: var(--panel);
+  box-shadow: var(--sh-dark);
 }

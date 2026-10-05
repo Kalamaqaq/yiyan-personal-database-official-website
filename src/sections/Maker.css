@@ -1,0 +1,126 @@
+.maker {
+  position: relative;
+  overflow: hidden;
+}
+
+.maker-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.maker-deco .md1 {
+  left: 4%;
+  top: 14%;
+  opacity: 0.85;
+  transform: rotate(-12deg);
+}
+
+.maker-deco .md2 {
+  right: 4%;
+  bottom: 16%;
+  opacity: 0.75;
+  transform: rotate(8deg);
+}
+
+.maker-title {
+  margin: 22px 0 clamp(26px, 3.4vw, 40px);
+}
+
+/* 一张歪着的名片 */
+.card-maker-wrap {
+  max-width: 780px;
+}
+
+.card-maker {
+  display: grid;
+  grid-template-columns: 176px minmax(0, 1fr);
+  gap: 26px;
+  align-items: center;
+  padding: 26px;
+  border: 3px solid var(--ink);
+  border-radius: var(--r-card);
+  background: var(--panel);
+  box-shadow: 10px 10px 0 var(--cyan);
+  transform: rotate(-0.7deg);
+}
+
+.mk-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.mk-face img {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  border: 4px solid var(--pink);
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+.mk-face-cap {
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+
+.mk-rows {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mk-rows > div {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  gap: 16px;
+  align-items: baseline;
+  padding: 9px 0;
+  border-bottom: 2px dashed rgba(255, 255, 255, 0.16);
+}
+
+.mk-rows dt {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+
+.mk-rows dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.mk-link {
+  border-bottom: 3px solid var(--yellow);
+  transition: color 0.2s var(--ease);
+}
+
+.mk-link:hover {
+  color: var(--yellow);
+}
+
+.mk-close {
+  margin-top: 20px;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 30px);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+@media (max-width: 700px) {
+  .card-maker {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    padding: 20px;
+    transform: none;
+    box-shadow: 6px 6px 0 var(--cyan);
+  }
+  .mk-rows > div {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 12px;
+  }
+}

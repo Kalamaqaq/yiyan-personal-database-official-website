@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>记忆库 · 把过去，还给你。</title>
+    <title>记忆库 · 扔进来，然后忘掉它。</title>
     <meta
       name="description"
-      content="一个不会帮你整理的私人记忆库。你在深夜随手扔进去的碎片，会在某一天自己回来找你。本地优先，数据在你自己的设备上；AI 只建议，从不动手。Android APK 12.6 MB，免费。"
+      content="一个自己用的私人记忆库：随手扔一句话进去，星标×2、近期用过×2，某天它会自己冒出来找你。12.5 MB，不用注册，断网能用，数据在你手机里。Android APK 免费下载。"
     />
-    <meta name="theme-color" content="#070A12" />
+    <meta name="theme-color" content="#17120f" />
     <meta name="color-scheme" content="dark" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="apple-touch-icon" href="./mascot-192.png" />
@@ -20,10 +20,10 @@
     <link rel="canonical" href="https://yiyan-personal-database-official-website.vercel.app/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yiyan-personal-database-official-website.vercel.app/" />
-    <meta property="og:title" content="记忆库 · 把过去，还给你。" />
+    <meta property="og:title" content="记忆库 · 扔进来，然后忘掉它。" />
     <meta
       property="og:description"
-      content="一个不会帮你整理的私人记忆库。整理，是遗忘的开始。"
+      content="随手扔一句进去。星标×2、近期用过×2 —— 某天它会自己冒出来找你。"
     />
     <meta
       property="og:image"
@@ -37,7 +37,7 @@
       html,
       body {
         margin: 0;
-        background: #070a12;
+        background: #17120f;
       }
       #boot {
         position: fixed;
@@ -46,39 +46,55 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 18px;
-        background: #070a12;
+        gap: 22px;
+        background: #17120f;
         z-index: 99;
-        transition: opacity 0.6s ease;
-        font: 400 12px/1.6 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
-        color: #5b6479;
-        letter-spacing: 0.22em;
+        transition: opacity 0.45s ease;
       }
       #boot.gone {
         opacity: 0;
         pointer-events: none;
       }
-      #boot i {
-        display: block;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: #5b84ff;
-        animation: bootpulse 1.4s ease-in-out infinite;
+      #boot .bricks {
+        display: flex;
+        align-items: flex-end;
+        gap: 9px;
+        height: 40px;
       }
-      @keyframes bootpulse {
+      #boot .bricks i {
+        display: block;
+        width: 22px;
+        height: 22px;
+        border-radius: 5px;
+        animation: hop 1.05s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+      }
+      #boot .bricks i:nth-child(1) {
+        background: #ff2e88;
+      }
+      #boot .bricks i:nth-child(2) {
+        background: #ffd400;
+        animation-delay: 0.12s;
+      }
+      #boot .bricks i:nth-child(3) {
+        background: #12e6c8;
+        animation-delay: 0.24s;
+      }
+      @keyframes hop {
         0%,
         100% {
-          opacity: 0.25;
-          transform: scale(0.8);
+          transform: translateY(0) rotate(0deg);
         }
-        50% {
-          opacity: 1;
-          transform: scale(1.15);
+        45% {
+          transform: translateY(-16px) rotate(12deg);
         }
       }
+      #boot span {
+        font: 800 12px/1.6 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+        color: #93857d;
+        letter-spacing: 0.24em;
+      }
       @media (prefers-reduced-motion: reduce) {
-        #boot i {
+        #boot .bricks i {
           animation: none;
         }
       }
@@ -86,37 +102,39 @@
   </head>
   <body>
     <div id="boot" aria-hidden="true">
-      <i></i>
-      <span>图书馆开灯中</span>
+      <div class="bricks"><i></i><i></i><i></i></div>
+      <span>记忆库</span>
     </div>
     <div id="root"></div>
     <noscript>
       <div
-        style="max-width:44em;margin:0 auto;padding:14vh 24px;font:400 16px/1.9 -apple-system,'PingFang SC','Microsoft YaHei',sans-serif;color:#a9b1c5"
+        style="max-width:42em;margin:0 auto;padding:14vh 24px;font:400 16px/1.85 -apple-system,'PingFang SC','Microsoft YaHei',sans-serif;color:#cdc2bb"
       >
-        <h1 style="font-size:38px;line-height:1.2;color:#eef0f7;font-weight:500;margin:0 0 18px">
-          记忆库 · 把过去，还给你。
+        <h1
+          style="font:400 40px/1.1 'Arial Black','PingFang SC','Microsoft YaHei',sans-serif;color:#fff;margin:0 0 18px"
+        >
+          扔进来，然后忘掉它。
         </h1>
-        <p style="margin:0 0 14px">
-          一个不会帮你整理的私人记忆库。你在某个深夜随手扔进去的一句话，会在某一天，自己回来找你。
+        <p style="margin:0 0 16px">
+          随手写的一句话会被存下来。星标 ×2、五天内用过的 ×2，倍数是相加的 ——
+          某天它会自己冒出来找你。
         </p>
-        <p style="margin:0 0 14px">
-          它不替你自动打标签，不逼你分类归档，也不把你的内容交给我们的服务器 ——
-          数据存在你自己的设备上，AI 用你自己填的 Key。AI 只建议，动手的永远是你。
+        <p style="margin:0 0 16px">
+          12.5 MB。不用注册，断网能用，数据在你手机里。AI 要你自己填 Key，所以你的内容不经过我。
         </p>
-        <p style="margin:0 0 14px">
-          首屏那个「投喂 → 抽卡」的演示需要 JavaScript 才能运行，但你不用看演示也能下载它：
+        <p style="margin:0 0 16px">
+          首屏那台抽卡机需要 JavaScript 才能转，但你不用看它也能下载：
         </p>
         <p style="margin:0 0 22px">
           <a
             href="./download/yiyan-personal-database-v2.7.3-release.apk"
-            style="display:inline-block;padding:14px 24px;border-radius:999px;background:#eef0f7;color:#06080f;text-decoration:none;font-weight:500"
-            >下载 Android 版 · 12.5 MB</a
+            style="display:inline-block;padding:15px 26px;border-radius:20px;background:#ff2e88;color:#fff;font-weight:800;text-decoration:none;box-shadow:4px 4px 0 rgba(0,0,0,.55)"
+            >下载 APK · 12.5 MB</a
           >
         </p>
-        <p style="font-size:13px;color:#737b91;margin:0">
-          没有 iOS 版；云端备份要你自己填一个 token，且备忘录里的图片不参与备份；
-          源码为 CC BY-NC 4.0，不可商用。以上是全部已知的硬伤。
+        <p style="font-size:13px;color:#93857d;margin:0">
+          没有 iOS 版；云备份要自己填一次 token，而且备忘录里的图片不跟着备份；
+          桌面版停在 2.0.4，别装。就这些。
         </p>
       </div>
     </noscript>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Reveal } from '../components/Reveal';
-import { Butterfly } from '../components/Butterfly';
+import { Star, Triangle } from '../components/Geo';
 import {
   APK_SIZE_LABEL,
   APK_SHA256,
@@ -9,15 +9,10 @@ import {
   APP_VERSION,
   LINKS,
 } from '../data/site';
+import { INSTALL_STEPS } from './copy';
 import './Download.css';
 
 type Mirror = 'idle' | 'checking' | 'down' | 'ok';
-
-const STEPS = [
-  '点上面的按钮，13 MB 左右，几秒钟的事。',
-  '手机会提示「未知来源」—— 允许就行。这个包没有上应用商店，所以系统不认识它。',
-  '装完直接能用。第一次打开会慢一点，因为它正在你手机里建自己的库。',
-];
 
 export function DownloadSection() {
   const [copied, setCopied] = useState<'apk' | 'sha' | null>(null);
@@ -33,10 +28,7 @@ export function DownloadSection() {
     }
   };
 
-  /**
-   * 备用镜像先探活再跳转 —— 宁可告诉访客「镜像还没上线」，
-   * 也不要甩给他一个 404 的白页。
-   */
+  /** 备用镜像先探活再跳转：宁可说「还没上线」，也不甩个 404 白页给访客 */
   const openMirror = async () => {
     setMirror('checking');
     try {
@@ -54,36 +46,40 @@ export function DownloadSection() {
 
   return (
     <section className="sec dl" id="download">
+      <div className="dl-deco" aria-hidden="true">
+        <Star className="dd dd1" size={58} color="var(--pink)" />
+        <Triangle className="dd dd2" size={38} color="var(--cyan)" />
+      </div>
+
       <div className="shell">
         <Reveal>
           <span className="eyebrow">
-            <span className="no">06</span>
+            <span className="no">05</span>
             <em>下载</em>
           </span>
         </Reveal>
 
+        <h2 className="display dl-title">
+          <Reveal tag="span" mask className="line">
+            拿去用。
+          </Reveal>
+        </h2>
+
         <div className="dl-grid">
           <div className="dl-left">
-            <Reveal>
-              <h2 className="display dl-title">
-                <span className="line">拿走它。</span>
-              </h2>
-            </Reveal>
-            <Reveal delay={140}>
+            <Reveal delay={100}>
               <p className="lede dl-lede">
-                免费。没有广告，没有账号，没有会员，没有「升级到专业版」。
+                免费。没有广告、没有会员、没有「升级到专业版」。
                 我也不会拿到你的任何一条内容。
               </p>
             </Reveal>
 
-            <Reveal delay={240} className="dl-actions">
-              <a className="btn btn-primary dl-main" href={APK_URL_PRIMARY} download>
-                <Butterfly size={17} color="currentColor" />
-                下载 Android 版 · {APK_SIZE_LABEL}
+            <Reveal delay={200} className="dl-actions">
+              <a className="btn dl-main" href={APK_URL_PRIMARY} download>
+                下载 APK · {APK_SIZE_LABEL}
               </a>
-
-              <a className="btn btn-ghost" href="./app/" target="_blank" rel="noreferrer">
-                不用装，先在网页上试用一次
+              <a className="btn btn-line" href="./app/" target="_blank" rel="noreferrer">
+                先在浏览器里玩一下
                 <span className="ar">↗</span>
               </a>
 
@@ -93,13 +89,13 @@ export function DownloadSection() {
                 </button>
                 {mirror === 'down' && (
                   <span className="dl-mirror-msg">
-                    镜像还没上线，用上面的主按钮就行 —— 同一个文件。
+                    镜像还没上线，用上面的按钮就行 —— 同一个文件。
                   </span>
                 )}
               </div>
             </Reveal>
 
-            <Reveal delay={320} className="dl-meta">
+            <Reveal delay={280} className="dl-meta">
               <dl className="mono">
                 <div>
                   <dt>版本</dt>
@@ -124,14 +120,16 @@ export function DownloadSection() {
                   <dd>2026-10-03</dd>
                 </div>
                 <div>
-                  <dt>签名校验</dt>
+                  <dt>校验</dt>
                   <dd>
                     <button
                       className="linky dl-sha"
                       onClick={() => copy(APK_SHA256, 'sha')}
                       title={APK_SHA256}
                     >
-                      {copied === 'sha' ? '已复制完整 SHA-256' : `SHA-256 ${APK_SHA256.slice(0, 16)}…`}
+                      {copied === 'sha'
+                        ? '已复制完整 SHA-256'
+                        : `SHA-256 ${APK_SHA256.slice(0, 16)}…`}
                     </button>
                   </dd>
                 </div>
@@ -139,10 +137,10 @@ export function DownloadSection() {
             </Reveal>
           </div>
 
-          <Reveal delay={160} className="dl-right card">
+          <Reveal delay={140} className="dl-right">
             <h3 className="h3">装它有三步，只有一步可能卡住</h3>
             <ol className="dl-steps">
-              {STEPS.map((s, i) => (
+              {INSTALL_STEPS.map((s, i) => (
                 <li key={s}>
                   <span className="mono">{String(i + 1).padStart(2, '0')}</span>
                   <p>{s}</p>
@@ -154,26 +152,23 @@ export function DownloadSection() {
               <div>
                 <h4 className="mono">网页版</h4>
                 <p>
-                  和 Android 版同一套代码，数据存在浏览器本地。第一次打开要等几秒加载，
-                  换浏览器或者清缓存就等于换一台新设备 —— 这是浏览器的限制，不是 bug。
+                  和 Android 版同一套代码，数据存在浏览器本地。第一次打开要等几秒，
+                  换个浏览器或者清缓存就等于换一台新设备 —— 这是浏览器的限制，不是 bug。
                 </p>
               </div>
               <div>
                 <h4 className="mono">Windows 桌面版</h4>
-                <p>
-                  存在，但还停在 2.0.4，比 Android 版旧了一大截，不建议现在用。
-                  想自己构建的话，仓库里有完整的打包脚本。
-                </p>
+                <p>存在，但停在 2.0.4，比 Android 版旧一大截，不建议现在用。</p>
               </div>
               <div>
                 <h4 className="mono">iOS</h4>
-                <p>没有。也不打算有。</p>
+                <p>没有。</p>
               </div>
             </div>
 
             <div className="dl-links">
               <button className="linky" onClick={() => copy(APK_URL_PRIMARY, 'apk')}>
-                {copied === 'apk' ? '下载链接已复制' : '复制下载链接（发给手机）'}
+                {copied === 'apk' ? '链接已复制' : '复制下载链接（发给手机）'}
               </button>
               <a className="linky" href={LINKS.source} target="_blank" rel="noreferrer">
                 看源码 ↗

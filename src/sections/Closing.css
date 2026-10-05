@@ -1,16 +1,38 @@
 .closing {
   position: relative;
-  padding: clamp(90px, 14vw, 190px) 0 clamp(70px, 11vw, 150px);
+  padding: clamp(78px, 12vw, 160px) 0 clamp(70px, 10vw, 130px);
   text-align: center;
+  overflow: hidden;
 }
 
-.closing-b {
-  margin: 0 auto 26px;
+.closing-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.closing-deco .cd1 {
+  left: 12%;
+  top: 22%;
+  transform: rotate(-14deg);
+  opacity: 0.9;
+}
+
+.closing-deco .cd2 {
+  right: 8%;
+  bottom: 14%;
+  transform: rotate(10deg);
+  opacity: 0.45;
+}
+
+.closing-deco .cd3 {
+  right: 22%;
+  top: 16%;
+  transform: rotate(22deg);
 }
 
 .closing-line {
   margin: 0 auto;
-  text-align: center;
 }
 
 .closing-line .line {
@@ -18,8 +40,8 @@
 }
 
 .closing-sub {
-  margin-top: 30px;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  color: var(--ink-4);
+  margin-top: 22px;
+  font-size: clamp(14px, 1.5vw, 16px);
+  font-weight: 700;
+  color: var(--ink-2);
 }

@@ -1,19 +1,16 @@
+/* 抽卡机：整站最重的一块「贴纸」，黄底硬阴影 + 微微歪一点 */
+
 .demo {
+  position: relative;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  position: relative;
-  overflow: hidden;
-}
-
-/* 玻璃面板里再叠一层极淡的光，让卡片浮在夜色上 */
-.demo::before {
-  content: '';
-  position: absolute;
-  inset: -40% 40% 60% -30%;
-  background: radial-gradient(closest-side, rgba(91, 132, 255, 0.16), transparent);
-  pointer-events: none;
+  border: 3px solid var(--ink);
+  border-radius: var(--r-card);
+  background: var(--panel);
+  box-shadow: 10px 10px 0 var(--yellow);
+  transform: rotate(0.8deg);
 }
 
 .demo-head {
@@ -21,19 +18,31 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  position: relative;
+}
+
+.demo-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 14px;
+  border-radius: var(--r-btn);
+  background: var(--cyan);
+  color: var(--bg);
+  font-weight: 800;
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
 }
 
 .demo-stats {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--ink-3);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
 }
 
 .demo-input {
   display: flex;
   gap: 8px;
-  position: relative;
 }
 
 .demo-input input {
@@ -41,16 +50,14 @@
   min-width: 0;
   height: 50px;
   padding: 0 16px;
-  border-radius: 12px;
-  border: 1px solid var(--line-2);
-  background: rgba(4, 6, 12, 0.62);
+  border-radius: var(--r-btn);
+  border: 2.5px solid var(--ink);
+  background: var(--bg);
   color: var(--ink);
   font-family: inherit;
   font-size: 15px;
   outline: none;
-  transition:
-    border-color 0.3s var(--ease),
-    background 0.3s var(--ease);
+  transition: box-shadow 0.18s var(--pop);
 }
 
 .demo-input input::placeholder {
@@ -58,31 +65,32 @@
 }
 
 .demo-input input:focus {
-  border-color: rgba(91, 132, 255, 0.62);
-  background: rgba(4, 6, 12, 0.86);
+  box-shadow: 4px 4px 0 var(--cyan);
 }
 
 .demo-feed {
   flex: 0 0 auto;
   height: 50px;
   padding: 0 20px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid var(--line-2);
+  border-radius: var(--r-btn);
+  background: var(--violet);
+  color: #fff;
+  font-weight: 800;
   font-size: 14px;
+  border: 2.5px solid var(--ink);
   transition:
-    background 0.3s var(--ease),
-    color 0.3s var(--ease),
-    opacity 0.3s var(--ease);
+    transform 0.16s var(--pop),
+    box-shadow 0.16s var(--pop),
+    opacity 0.2s var(--ease);
 }
 
 .demo-feed:hover:not(:disabled) {
-  background: var(--ink);
-  color: #06080f;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--ink);
 }
 
 .demo-feed:disabled {
-  opacity: 0.34;
+  opacity: 0.36;
   cursor: default;
 }
 
@@ -92,34 +100,32 @@
   gap: 6px;
   font-size: 12.5px;
   min-height: 20px;
-  position: relative;
 }
 
-.demo-hintline-ok {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--blue-soft);
-  animation: hintIn 0.6s var(--ease);
+.demo-ok {
+  color: var(--cyan);
+  font-size: 11px;
+  animation: hintIn 0.5s var(--pop);
 }
 
 @keyframes hintIn {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(5px) scale(0.96);
   }
 }
 
 .linky {
   padding: 0;
-  color: var(--ink-2);
+  color: var(--ink);
   font-size: inherit;
-  border-bottom: 1px solid var(--line-3);
-  transition: color 0.3s var(--ease);
+  font-weight: 700;
+  border-bottom: 2px solid var(--cyan);
+  transition: color 0.2s var(--ease);
 }
 
 .linky:hover {
-  color: var(--ink);
+  color: var(--cyan);
 }
 
 .demo-stage {
@@ -134,26 +140,23 @@
 .frag {
   width: 100%;
   min-height: 168px;
-  padding: 22px;
-  border-radius: var(--radius);
-  border: 1px solid var(--line-2);
-  background: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.07),
-    rgba(255, 255, 255, 0.015) 62%
-  );
+  padding: 20px;
+  border-radius: 16px;
+  border: 2.5px solid var(--ink);
+  background: var(--panel-2);
+  box-shadow: 6px 6px 0 var(--cyan);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 18px;
   transform-origin: 50% 100%;
-  animation: deal 0.72s var(--ease) both;
+  animation: deal 0.55s var(--pop) both;
 }
 
 @keyframes deal {
   0% {
     opacity: 0;
-    transform: translate3d(0, 26px, -120px) rotateX(16deg) rotateZ(-1.4deg) scale(0.94);
+    transform: translate3d(0, 34px, -110px) rotateX(20deg) rotateZ(-2.4deg) scale(0.9);
   }
   100% {
     opacity: 1;
@@ -162,8 +165,9 @@
 }
 
 .frag-text {
-  font-size: clamp(17px, 2.1vw, 21px);
-  line-height: 1.62;
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.6;
+  font-weight: 700;
   letter-spacing: -0.01em;
 }
 
@@ -176,7 +180,7 @@
 }
 
 .frag-origin {
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: var(--ink-3);
 }
 
@@ -184,7 +188,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: var(--ink-3);
 }
 
@@ -194,31 +198,38 @@
   font-size: 10px;
   line-height: 1;
   padding: 3px 5px;
-  border-radius: 4px;
-  border: 1px solid var(--line-2);
-  color: var(--gold);
+  border-radius: 5px;
+  background: var(--yellow);
+  color: var(--bg);
 }
 
-/* 你投喂的那条回来了 —— 整张牌换金 */
+/* 你投喂的那条回来了：整张牌翻成明黄 + 粉色硬阴影，全站最响的一下 */
 .frag-mine {
-  border-color: rgba(217, 168, 92, 0.55);
-  background:
-    radial-gradient(120% 100% at 0% 0%, rgba(217, 168, 92, 0.14), transparent 58%),
-    linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02) 62%);
-  box-shadow:
-    0 0 0 1px rgba(217, 168, 92, 0.16),
-    0 26px 70px -34px rgba(217, 168, 92, 0.7);
+  background: var(--yellow);
+  color: var(--bg);
+  border-color: var(--bg);
+  box-shadow: 8px 8px 0 var(--pink);
 }
 
 .frag-mine .frag-text {
-  color: var(--gold-soft);
+  color: var(--bg);
+}
+
+.frag-mine .frag-origin,
+.frag-mine .frag-w {
+  color: rgba(23, 18, 15, 0.72);
+}
+
+.frag-mine .chip {
+  background: var(--pink);
+  color: #fff;
 }
 
 .frag-empty {
   width: 100%;
   min-height: 168px;
-  border-radius: var(--radius);
-  border: 1px dashed var(--line-2);
+  border-radius: 16px;
+  border: 3px dashed rgba(255, 255, 255, 0.24);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -226,13 +237,17 @@
   gap: 12px;
   text-align: center;
   padding: 24px;
-  font-size: 12.5px;
-  color: var(--ink-4);
+  font-size: 11.5px;
+  color: var(--ink-3);
 }
 
-.frag-empty .dim {
-  max-width: 34ch;
+.frag-empty .mono {
+  color: var(--ink-2);
   font-size: 12px;
+}
+
+.frag-empty span:last-child {
+  max-width: 34ch;
   line-height: 1.7;
 }
 
@@ -245,40 +260,39 @@
 .burst .b {
   position: absolute;
   left: 50%;
-  bottom: 30%;
+  bottom: 28%;
   opacity: 0;
-  animation: flyUp 2.4s var(--ease) both;
-  color: rgba(11, 15, 26, 0.9);
+  animation: flyUp 2.1s var(--pop) both;
 }
 
 .burst .b1 {
-  animation-delay: 0.05s;
-  margin-left: -80px;
+  animation-delay: 0.04s;
+  margin-left: -92px;
 }
 .burst .b2 {
-  animation-delay: 0.22s;
-  margin-left: -20px;
+  animation-delay: 0.18s;
+  margin-left: -28px;
 }
 .burst .b3 {
-  animation-delay: 0.4s;
-  margin-left: 42px;
+  animation-delay: 0.32s;
+  margin-left: 44px;
 }
 .burst .b4 {
-  animation-delay: 0.56s;
-  margin-left: 96px;
+  animation-delay: 0.46s;
+  margin-left: 104px;
 }
 
 @keyframes flyUp {
   0% {
     opacity: 0;
-    transform: translate3d(0, 0, 0) scale(0.6) rotate(-8deg);
+    transform: translate3d(0, 0, 0) scale(0.5) rotate(0deg);
   }
-  22% {
+  20% {
     opacity: 1;
   }
   100% {
     opacity: 0;
-    transform: translate3d(14px, -170px, 0) scale(1.05) rotate(12deg);
+    transform: translate3d(18px, -180px, 0) scale(1.15) rotate(150deg);
   }
 }
 
@@ -286,42 +300,46 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  font-size: 13px;
+  font-size: 12.5px;
   line-height: 1.72;
   color: var(--ink-3);
-  min-height: 62px;
+  min-height: 64px;
 }
 
 .demo-copy strong {
   color: var(--ink);
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 800;
+  font-size: 13.5px;
 }
 
-.demo-copy .gold {
-  color: var(--gold-soft);
+.demo-copy .win {
+  color: var(--yellow);
+  font-size: 15px;
 }
 
 .demo-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
 }
 
 .demo-draw {
   height: 48px;
-  padding: 0 24px;
-  font-size: 14.5px;
+  padding: 0 26px;
 }
 
 .demo-reset {
-  font-size: 13px;
-  color: var(--ink-4);
+  font-size: 12.5px;
+  color: var(--ink-2);
+  border-bottom-width: 2px;
+  border-bottom-color: var(--ink-4);
 }
 
 @media (max-width: 640px) {
   .demo {
     padding: 16px;
+    transform: none;
+    box-shadow: 6px 6px 0 var(--yellow);
   }
   .demo-input {
     flex-direction: column;

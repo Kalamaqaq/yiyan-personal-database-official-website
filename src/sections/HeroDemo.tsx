@@ -5,10 +5,11 @@ import {
   makeMine,
   type Fragment,
 } from '../data/fragments';
-import { Butterfly } from '../components/Butterfly';
+import { Star } from '../components/Geo';
+import { DEMO_COPY } from './copy';
 import './HeroDemo.css';
 
-/** 加权随机：和主项目 src/services/random.ts 的规则一致，倍数是相加的 */
+/** 加权随机：与主项目 src/services/random.ts 同规则，倍数是相加的 */
 function pickWeighted(pool: Fragment[], exclude: Set<string>): Fragment | null {
   const live = pool.filter((f) => !exclude.has(f.id));
   const source = live.length ? live : pool;
@@ -35,10 +36,7 @@ export function HeroDemo() {
     () => (mine ? [...PRESET_FRAGMENTS, mine] : PRESET_FRAGMENTS),
     [mine]
   );
-  const totalWeight = useMemo(
-    () => pool.reduce((s, f) => s + f.weight, 0),
-    [pool]
-  );
+  const totalWeight = useMemo(() => pool.reduce((s, f) => s + f.weight, 0), [pool]);
   const drawnCount = closed.size;
   const won = drawn?.mine === true;
 
@@ -66,11 +64,8 @@ export function HeroDemo() {
       return s;
     });
     setRound((r) => r + 1);
-    if (next.mine) {
-      setMisses(0);
-    } else if (mine) {
-      setMisses((m) => m + 1);
-    }
+    if (next.mine) setMisses(0);
+    else if (mine) setMisses((m) => m + 1);
   }, [pool, closed, mine]);
 
   const reset = useCallback(() => {
@@ -81,15 +76,12 @@ export function HeroDemo() {
     setText('');
   }, []);
 
-  const share = totalWeight > 0 && drawn ? drawn.weight / totalWeight : 0;
+  const chance = totalWeight > 0 && drawn ? drawn.weight / totalWeight : 0;
 
   return (
-    <div className="demo card">
+    <div className="demo">
       <div className="demo-head">
-        <span className="tag">
-          <i className="dot" />
-          抽卡演示
-        </span>
+        <span className="demo-badge">抽卡机</span>
         <span className="demo-stats mono">
           池中 {pool.length} · 总权重 {totalWeight.toFixed(1)} · 已抽 {drawnCount}
         </span>
@@ -103,7 +95,7 @@ export function HeroDemo() {
           onKeyDown={(e) => {
             if (e.key === 'Enter') feed();
           }}
-          placeholder="写下此刻你脑子里的一句话……"
+          placeholder="现在脑子里的一句话……"
           aria-label="投喂一句记忆"
           maxLength={120}
         />
@@ -126,8 +118,8 @@ export function HeroDemo() {
             </button>
           </>
         ) : (
-          <span className="dim demo-hintline-ok" key={fedTick}>
-            <Butterfly size={13} /> 已入库。你那条现在权重 3.0 —— 会被优先翻出来。
+          <span className="demo-ok mono" key={fedTick}>
+            已入库 · 你这条权重 3.0，会被优先翻出来
           </span>
         )}
       </div>
@@ -148,16 +140,16 @@ export function HeroDemo() {
         ) : (
           <div className="frag-empty">
             <span className="mono">这里会出现一张牌</span>
-            <span className="dim">规则和 App 里一模一样：星标 +1、五天内用过 +1，倍数是相加的。</span>
+            <span>规则和 App 里一模一样：星标 +1、五天内用过 +1，倍数是相加的。</span>
           </div>
         )}
 
         {won && (
           <div className="burst" aria-hidden="true">
-            <Butterfly size={18} className="b b1" />
-            <Butterfly size={13} className="b b2" />
-            <Butterfly size={15} className="b b3" />
-            <Butterfly size={11} className="b b4" />
+            <Star size={30} className="b b1" color="var(--pink)" />
+            <Star size={20} className="b b2" color="var(--cyan)" />
+            <Star size={26} className="b b3" color="var(--violet)" />
+            <Star size={16} className="b b4" color="var(--yellow)" />
           </div>
         )}
       </div>
@@ -165,34 +157,28 @@ export function HeroDemo() {
       <div className="demo-copy" aria-live="polite">
         {won ? (
           <>
-            <strong className="gold">看。它回来了。</strong>
-            <span>
-              这次命中概率是 {(share * 100).toFixed(0)}% —— 因为你投喂的那条权重最高。
-              记忆库不改你的东西，它只是让重要的那些更容易被遇上。
-            </span>
+            <strong className="win">{DEMO_COPY.winTitle}</strong>
+            <span>{DEMO_COPY.winBody}</span>
           </>
         ) : drawn ? (
           <>
-            <strong>这次不是它。</strong>
+            <strong>{DEMO_COPY.missTitle}</strong>
             <span>
-              权重说明一切：这一张 {drawn.weight.toFixed(1)} 分，占池子 {totalWeight.toFixed(1)} 分里的{' '}
-              {(share * 100).toFixed(0)}%。
+              这一张 {drawn.weight.toFixed(1)} 分，占全池 {totalWeight.toFixed(1)} 分里的{' '}
+              {(chance * 100).toFixed(0)}%。
               {misses >= 2 ? '继续抽，它跑不掉。' : '再抽一张。'}
             </span>
           </>
         ) : (
           <>
-            <strong>先扔一句进去，再抽。</strong>
-            <span>
-              抽卡不用等 —— 但只有你亲手扔进去的那条，才会在抽出来的时候，让你愣一下。
-            </span>
+            <strong>{DEMO_COPY.emptyTitle}</strong>
+            <span>{DEMO_COPY.emptyBody}</span>
           </>
         )}
       </div>
 
       <div className="demo-actions">
-        <button className="btn btn-primary demo-draw" onClick={draw}>
-          <Butterfly size={16} color="currentColor" />
+        <button className="btn btn-yellow demo-draw" onClick={draw}>
           抽一张
         </button>
         {drawnCount > 0 && (
