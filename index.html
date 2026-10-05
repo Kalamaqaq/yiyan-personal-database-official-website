@@ -13,13 +13,24 @@
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="apple-touch-icon" href="./mascot-192.png" />
 
+    <!--
+      社交分享需要绝对地址（爬虫不解析相对路径）。
+      换自定义域名时，改下面这一处即可。
+    -->
+    <link rel="canonical" href="https://yiyan-personal-database-official-website.vercel.app/" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yiyan-personal-database-official-website.vercel.app/" />
     <meta property="og:title" content="记忆库 · 把过去，还给你。" />
     <meta
       property="og:description"
       content="一个不会帮你整理的私人记忆库。整理，是遗忘的开始。"
     />
-    <meta property="og:image" content="./og.jpg" />
+    <meta
+      property="og:image"
+      content="https://yiyan-personal-database-official-website.vercel.app/og.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <style>
@@ -79,6 +90,36 @@
       <span>图书馆开灯中</span>
     </div>
     <div id="root"></div>
+    <noscript>
+      <div
+        style="max-width:44em;margin:0 auto;padding:14vh 24px;font:400 16px/1.9 -apple-system,'PingFang SC','Microsoft YaHei',sans-serif;color:#a9b1c5"
+      >
+        <h1 style="font-size:38px;line-height:1.2;color:#eef0f7;font-weight:500;margin:0 0 18px">
+          记忆库 · 把过去，还给你。
+        </h1>
+        <p style="margin:0 0 14px">
+          一个不会帮你整理的私人记忆库。你在某个深夜随手扔进去的一句话，会在某一天，自己回来找你。
+        </p>
+        <p style="margin:0 0 14px">
+          它不替你自动打标签，不逼你分类归档，也不把你的内容交给我们的服务器 ——
+          数据存在你自己的设备上，AI 用你自己填的 Key。AI 只建议，动手的永远是你。
+        </p>
+        <p style="margin:0 0 14px">
+          首屏那个「投喂 → 抽卡」的演示需要 JavaScript 才能运行，但你不用看演示也能下载它：
+        </p>
+        <p style="margin:0 0 22px">
+          <a
+            href="./download/yiyan-personal-database-v2.7.3-release.apk"
+            style="display:inline-block;padding:14px 24px;border-radius:999px;background:#eef0f7;color:#06080f;text-decoration:none;font-weight:500"
+            >下载 Android 版 · 12.5 MB</a
+          >
+        </p>
+        <p style="font-size:13px;color:#737b91;margin:0">
+          没有 iOS 版；云端备份要你自己填一个 token，且备忘录里的图片不参与备份；
+          源码为 CC BY-NC 4.0，不可商用。以上是全部已知的硬伤。
+        </p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

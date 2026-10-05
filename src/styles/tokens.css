@@ -58,6 +58,13 @@
   }
 }
 
+/* 超大屏不要只剩两团黑：放宽版心，让构图继续成立 */
+@media (min-width: 1600px) {
+  :root {
+    --shell: 1280px;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
