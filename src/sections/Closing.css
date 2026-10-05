@@ -1,0 +1,25 @@
+.closing {
+  position: relative;
+  padding: clamp(90px, 14vw, 190px) 0 clamp(70px, 11vw, 150px);
+  text-align: center;
+}
+
+.closing-b {
+  margin: 0 auto 26px;
+}
+
+.closing-line {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.closing-line .line {
+  display: block;
+}
+
+.closing-sub {
+  margin-top: 30px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--ink-4);
+}

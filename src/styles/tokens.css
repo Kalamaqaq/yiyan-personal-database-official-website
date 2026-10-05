@@ -1,0 +1,419 @@
+/* ==========================================================================
+   记忆库官网 · 设计系统
+   --------------------------------------------------------------------------
+   全站零 Web 字体。中文依赖系统字体的真实形态（PingFang / 鸿蒙 / 雅黑），
+   拉丁与数字走等宽 —— 用「黑体 + 等宽」的反差建立冷静、克制的仪器感，
+   同时把首屏体积压到 0 外部请求。这是本站在国内网络下的性能底线。
+   ========================================================================== */
+
+:root {
+  /* —— 夜色梯度：整站的地面 —— */
+  --night-1000: #04060c;
+  --night-950: #050810;
+  --night-900: #070a12;
+  --night-850: #0b0f1a;
+  --night-800: #101524;
+  --night-750: #161c2e;
+  --night-700: #1e2539;
+
+  /* —— 文字 —— */
+  --ink: #eef0f7;
+  --ink-2: #a9b1c5;
+  --ink-3: #737b91;
+  --ink-4: #4b5266;
+
+  /* —— 两条谱线：蝴蝶蓝（记忆本身）+ 流苏金（被人记住的部分）—— */
+  --blue: #5b84ff;
+  --blue-soft: #8fb0ff;
+  --blue-deep: #2b47a8;
+  --gold: #d9a85c;
+  --gold-soft: #f0ce92;
+
+  /* —— 描边：只用极细的、带透明度的白 —— */
+  --line: rgba(255, 255, 255, 0.07);
+  --line-2: rgba(255, 255, 255, 0.12);
+  --line-3: rgba(255, 255, 255, 0.2);
+
+  /* —— 字体 —— */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "HarmonyOS Sans SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC",
+    "Source Han Sans SC", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", "JetBrains Mono",
+    Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* —— 节奏 —— */
+  --shell: 1140px;
+  --gutter: 24px;
+  --radius: 14px;
+  --radius-lg: 22px;
+
+  /* —— 缓动：一条有性格的曲线，全站统一 —— */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (max-width: 720px) {
+  :root {
+    --gutter: 18px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+/* 尊重系统的减弱动效设置 —— 无障碍底线，不是可选项 */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--night-900);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.75;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 夜空：三团极暗的光，让黑色不至于死板 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(
+      1100px 620px at 78% -8%,
+      rgba(91, 132, 255, 0.14),
+      transparent 62%
+    ),
+    radial-gradient(
+      780px 520px at 6% 26%,
+      rgba(217, 168, 92, 0.06),
+      transparent 66%
+    ),
+    radial-gradient(
+      900px 700px at 50% 118%,
+      rgba(91, 132, 255, 0.08),
+      transparent 68%
+    );
+}
+
+/* 纸纹：3% 的颗粒，避免大面积纯色显得廉价 */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+::selection {
+  background: rgba(91, 132, 255, 0.34);
+  color: #fff;
+}
+
+/* ==========================================================================
+   排版基调
+   ========================================================================== */
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum" 1;
+  letter-spacing: 0.02em;
+}
+
+.sec {
+  position: relative;
+  padding: clamp(84px, 11vw, 168px) 0;
+}
+
+/* 章节眉标：序号 + 名称，用等宽体建立编辑感 */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+
+.eyebrow span.no {
+  color: var(--blue);
+}
+
+.eyebrow em {
+  font-style: normal;
+  color: var(--ink-2);
+  letter-spacing: 0.14em;
+}
+
+.hair {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--line-2) 12%,
+    var(--line-2) 88%,
+    transparent
+  );
+}
+
+/* 显示级标题：字距收紧，行高压缩，尺寸用 clamp 撑满视口节奏 */
+.display {
+  font-size: clamp(38px, 7.4vw, 92px);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+}
+
+.h2 {
+  font-size: clamp(28px, 4.2vw, 50px);
+  line-height: 1.22;
+  letter-spacing: -0.028em;
+  font-weight: 500;
+}
+
+.h3 {
+  font-size: clamp(19px, 2vw, 23px);
+  line-height: 1.45;
+  letter-spacing: -0.012em;
+  font-weight: 500;
+}
+
+.lede {
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.85;
+  color: var(--ink-2);
+}
+
+.dim {
+  color: var(--ink-3);
+}
+
+/* 关键词下划：一条会呼吸的金线
+   用 background 而不是伪元素 + z-index —— 后者会被页面背景层吃掉，实测发黑 */
+.mark {
+  white-space: nowrap;
+  color: var(--ink);
+  background-image: linear-gradient(
+    90deg,
+    rgba(217, 168, 92, 0.62),
+    rgba(217, 168, 92, 0.16)
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 0.42em;
+  background-position: 0 90%;
+}
+
+/* ==========================================================================
+   进场动效：一次性写入 class，靠 IntersectionObserver 触发
+   ========================================================================== */
+
+.rv {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
+  transition-delay: var(--d, 0ms);
+  will-change: opacity, transform;
+}
+
+.rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* 揭幕式标题：像拉开幕布一样从下往上露出
+   —— 裁剪必须落在内层 .mi 上，外层只负责被观察（见 Reveal.tsx 的注释） */
+.rv-mask .mi {
+  display: block;
+  clip-path: inset(0 0 105% 0);
+  transform: translate3d(0, 0.36em, 0);
+  transition:
+    clip-path 1.05s var(--ease),
+    transform 1.05s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+
+.rv-mask.in .mi {
+  clip-path: inset(-25% -12% -25% -12%);
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv,
+  .rv-mask,
+  .rv-mask .mi {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+}
+
+/* ==========================================================================
+   通用件
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 54px;
+  padding: 0 26px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition:
+    transform 0.35s var(--ease),
+    background 0.35s var(--ease),
+    border-color 0.35s var(--ease),
+    color 0.35s var(--ease);
+}
+
+.btn:active {
+  transform: scale(0.975);
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: #06080f;
+}
+.btn-primary:hover {
+  background: #fff;
+}
+
+.btn-ghost {
+  border: 1px solid var(--line-2);
+  color: var(--ink-2);
+}
+.btn-ghost:hover {
+  border-color: var(--line-3);
+  color: var(--ink);
+}
+
+.btn .ar {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  opacity: 0.55;
+  transition: transform 0.35s var(--ease);
+}
+.btn:hover .ar {
+  transform: translateX(3px);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 26px;
+  padding: 0 11px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 0 0 rgba(91, 132, 255, 0.6);
+  animation: dotpulse 2.6s var(--ease-in-out) infinite;
+}
+
+@keyframes dotpulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(91, 132, 255, 0.5);
+    opacity: 1;
+  }
+  60% {
+    box-shadow: 0 0 0 7px rgba(91, 132, 255, 0);
+    opacity: 0.75;
+  }
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.032),
+    rgba(255, 255, 255, 0.008)
+  );
+  backdrop-filter: blur(6px);
+}

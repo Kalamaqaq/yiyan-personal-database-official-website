@@ -1,0 +1,154 @@
+.mech-title {
+  margin: 26px 0 clamp(34px, 4.5vw, 58px);
+  max-width: 19em;
+}
+
+.mech-title .line {
+  display: block;
+}
+
+.mech-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.mech-card {
+  padding: 26px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition:
+    border-color 0.5s var(--ease),
+    transform 0.5s var(--ease);
+}
+
+.mech-card:hover {
+  border-color: var(--line-3);
+  transform: translateY(-3px);
+}
+
+.mech-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mech-no {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--blue);
+}
+
+.mech-note {
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-4);
+  text-align: right;
+}
+
+.mech-body {
+  font-size: 13.5px;
+  line-height: 1.88;
+  color: var(--ink-3);
+}
+
+.mech-viz {
+  margin-top: 6px;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+
+.mech-viz svg {
+  width: 100%;
+  height: 140px;
+  display: block;
+}
+
+/* —— M-01 权重条 —— */
+.viz-weights {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+
+.wrow {
+  display: grid;
+  grid-template-columns: 92px 1fr 30px;
+  align-items: center;
+  gap: 12px;
+}
+
+.wlabel {
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.wnum {
+  font-size: 11px;
+  color: var(--ink-4);
+  text-align: right;
+}
+
+.wbar {
+  height: 8px;
+  border-radius: 4px;
+  width: calc(var(--w) / 3 * 100%);
+  background: linear-gradient(90deg, var(--blue-deep), var(--blue));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 1s var(--ease) 0.15s;
+}
+
+.wrow:nth-child(2) .wbar {
+  background: linear-gradient(90deg, var(--blue), var(--blue-soft));
+  transition-delay: 0.28s;
+}
+
+.wrow:nth-child(3) .wbar {
+  background: linear-gradient(90deg, var(--blue-soft), var(--gold));
+  transition-delay: 0.41s;
+}
+
+.mech-card.in .wbar {
+  transform: scaleX(1);
+}
+
+/* —— M-04 转盘 —— */
+.wheel-spin {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  animation: wheelTurn 26s linear infinite;
+}
+
+.mech-card:hover .wheel-spin {
+  animation-duration: 3.6s;
+}
+
+@keyframes wheelTurn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mech-close {
+  margin-top: clamp(30px, 4vw, 48px);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ink-4);
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .mech-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

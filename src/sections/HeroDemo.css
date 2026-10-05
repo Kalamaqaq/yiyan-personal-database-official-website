@@ -1,0 +1,337 @@
+.demo {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 玻璃面板里再叠一层极淡的光，让卡片浮在夜色上 */
+.demo::before {
+  content: '';
+  position: absolute;
+  inset: -40% 40% 60% -30%;
+  background: radial-gradient(closest-side, rgba(91, 132, 255, 0.16), transparent);
+  pointer-events: none;
+}
+
+.demo-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: relative;
+}
+
+.demo-stats {
+  font-size: 11px;
+  color: var(--ink-3);
+  letter-spacing: 0.06em;
+}
+
+.demo-input {
+  display: flex;
+  gap: 8px;
+  position: relative;
+}
+
+.demo-input input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 50px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line-2);
+  background: rgba(4, 6, 12, 0.62);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  transition:
+    border-color 0.3s var(--ease),
+    background 0.3s var(--ease);
+}
+
+.demo-input input::placeholder {
+  color: var(--ink-4);
+}
+
+.demo-input input:focus {
+  border-color: rgba(91, 132, 255, 0.62);
+  background: rgba(4, 6, 12, 0.86);
+}
+
+.demo-feed {
+  flex: 0 0 auto;
+  height: 50px;
+  padding: 0 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--line-2);
+  font-size: 14px;
+  transition:
+    background 0.3s var(--ease),
+    color 0.3s var(--ease),
+    opacity 0.3s var(--ease);
+}
+
+.demo-feed:hover:not(:disabled) {
+  background: var(--ink);
+  color: #06080f;
+}
+
+.demo-feed:disabled {
+  opacity: 0.34;
+  cursor: default;
+}
+
+.demo-hintline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  min-height: 20px;
+  position: relative;
+}
+
+.demo-hintline-ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--blue-soft);
+  animation: hintIn 0.6s var(--ease);
+}
+
+@keyframes hintIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.linky {
+  padding: 0;
+  color: var(--ink-2);
+  font-size: inherit;
+  border-bottom: 1px solid var(--line-3);
+  transition: color 0.3s var(--ease);
+}
+
+.linky:hover {
+  color: var(--ink);
+}
+
+.demo-stage {
+  position: relative;
+  min-height: 196px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1100px;
+}
+
+.frag {
+  width: 100%;
+  min-height: 168px;
+  padding: 22px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line-2);
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.07),
+    rgba(255, 255, 255, 0.015) 62%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  transform-origin: 50% 100%;
+  animation: deal 0.72s var(--ease) both;
+}
+
+@keyframes deal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 26px, -120px) rotateX(16deg) rotateZ(-1.4deg) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.frag-text {
+  font-size: clamp(17px, 2.1vw, 21px);
+  line-height: 1.62;
+  letter-spacing: -0.01em;
+}
+
+.frag-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.frag-origin {
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+.frag-w {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+.chip {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1;
+  padding: 3px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--line-2);
+  color: var(--gold);
+}
+
+/* 你投喂的那条回来了 —— 整张牌换金 */
+.frag-mine {
+  border-color: rgba(217, 168, 92, 0.55);
+  background:
+    radial-gradient(120% 100% at 0% 0%, rgba(217, 168, 92, 0.14), transparent 58%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02) 62%);
+  box-shadow:
+    0 0 0 1px rgba(217, 168, 92, 0.16),
+    0 26px 70px -34px rgba(217, 168, 92, 0.7);
+}
+
+.frag-mine .frag-text {
+  color: var(--gold-soft);
+}
+
+.frag-empty {
+  width: 100%;
+  min-height: 168px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--line-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  padding: 24px;
+  font-size: 12.5px;
+  color: var(--ink-4);
+}
+
+.frag-empty .dim {
+  max-width: 34ch;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.burst .b {
+  position: absolute;
+  left: 50%;
+  bottom: 30%;
+  opacity: 0;
+  animation: flyUp 2.4s var(--ease) both;
+  color: rgba(11, 15, 26, 0.9);
+}
+
+.burst .b1 {
+  animation-delay: 0.05s;
+  margin-left: -80px;
+}
+.burst .b2 {
+  animation-delay: 0.22s;
+  margin-left: -20px;
+}
+.burst .b3 {
+  animation-delay: 0.4s;
+  margin-left: 42px;
+}
+.burst .b4 {
+  animation-delay: 0.56s;
+  margin-left: 96px;
+}
+
+@keyframes flyUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.6) rotate(-8deg);
+  }
+  22% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(14px, -170px, 0) scale(1.05) rotate(12deg);
+  }
+}
+
+.demo-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 13px;
+  line-height: 1.72;
+  color: var(--ink-3);
+  min-height: 62px;
+}
+
+.demo-copy strong {
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.demo-copy .gold {
+  color: var(--gold-soft);
+}
+
+.demo-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.demo-draw {
+  height: 48px;
+  padding: 0 24px;
+  font-size: 14.5px;
+}
+
+.demo-reset {
+  font-size: 13px;
+  color: var(--ink-4);
+}
+
+@media (max-width: 640px) {
+  .demo {
+    padding: 16px;
+  }
+  .demo-input {
+    flex-direction: column;
+  }
+  .demo-feed {
+    width: 100%;
+  }
+  .demo-stage,
+  .frag,
+  .frag-empty {
+    min-height: 172px;
+  }
+}

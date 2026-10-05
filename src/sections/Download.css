@@ -1,0 +1,182 @@
+.dl-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+  gap: clamp(30px, 4.4vw, 64px);
+  margin-top: 30px;
+  align-items: start;
+}
+
+.dl-title .line {
+  display: block;
+}
+
+.dl-lede {
+  margin-top: 22px;
+  max-width: 40ch;
+}
+
+.dl-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 34px;
+}
+
+.dl-main {
+  padding: 0 30px;
+}
+
+.dl-mirror {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.dl-mirror .linky {
+  color: var(--ink-3);
+}
+
+.dl-mirror-msg {
+  color: var(--gold);
+  font-size: 12.5px;
+}
+
+.dl-meta {
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.dl-meta dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 26px;
+}
+
+.dl-meta dl > div {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* 校验值太长，单独占一整行，免得挤成两截 */
+.dl-meta dl > div:last-child {
+  grid-column: 1 / -1;
+}
+
+.dl-meta dt {
+  flex: 0 0 62px;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--ink-4);
+}
+
+.dl-meta dd {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.dl-sha {
+  color: var(--ink-3);
+  border-bottom-color: var(--line-2);
+}
+
+.dl-right {
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.dl-right .h3 {
+  color: var(--ink);
+}
+
+.dl-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dl-steps li {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.dl-steps li > span {
+  font-size: 11px;
+  color: var(--blue);
+  padding-top: 4px;
+}
+
+.dl-steps p {
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: var(--ink-3);
+}
+
+.dl-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.dl-notes h4 {
+  margin: 0 0 6px;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: var(--ink-4);
+  font-weight: 400;
+}
+
+.dl-notes p {
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--ink-3);
+}
+
+.dl-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 12.5px;
+}
+
+.dl-links .linky {
+  color: var(--ink-3);
+}
+
+@media (max-width: 940px) {
+  .dl-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dl-actions .btn {
+    width: 100%;
+  }
+  .dl-actions {
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 520px) {
+  .dl-meta dl {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
