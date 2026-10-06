@@ -87,7 +87,7 @@ export const SPECS: { k: string; v: string; accent?: 'pink' | 'cyan' | 'yellow' 
   },
   { k: '平台', v: 'Android 5.1 以上。windows版比较旧。iOS 没有，也不打算有。' },
   { k: '源码', v: 'GitHub 上，CC BY-NC 4.0 —— 能读、能改、不能卖。' },
-  { k: '埋点', v: '零。我们也只是陌生人罢了，前世五百次的回眸，才换来今生的擦肩而过。' },
+  { k: '埋点', v: '零。前世五百次的回眸，才换来今生的擦肩而过。' },
 ];
 
 export const MAKER: { k: string; v: string; href?: string; sub?: string }[] = [
