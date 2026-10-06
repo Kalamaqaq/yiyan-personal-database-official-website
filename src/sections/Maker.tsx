@@ -1,10 +1,13 @@
 import { Reveal } from '../components/Reveal';
 import { Star, Squiggle } from '../components/Geo';
-import { LINKS, daysLit } from '../data/site';
+import { LINKS } from '../data/site';
+import { useUptimeLabel } from '../hooks/useUptime';
 import { MAKER } from './copy';
 import './Maker.css';
 
 export function Maker() {
+  const uptime = useUptimeLabel();
+
   return (
     <section className="sec maker" id="maker">
       <div className="maker-deco" aria-hidden="true">
@@ -30,7 +33,7 @@ export function Maker() {
           <div className="card-maker">
             <div className="mk-face">
               <img src="./mascot-192.png" alt="作者的头像" width={128} height={128} loading="lazy" />
-              <span className="mk-face-cap mono">亮灯 {daysLit()} 天</span>
+              <span className="mk-face-cap mono">{uptime}</span>
             </div>
 
             <div className="mk-body">

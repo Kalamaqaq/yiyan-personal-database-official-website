@@ -1,8 +1,11 @@
-import { APP_VERSION, LINKS, daysLit } from '../data/site';
+import { APP_VERSION, LINKS } from '../data/site';
+import { useUptimeLabel } from '../hooks/useUptime';
 import { ZigzagBand } from './Geo';
 import './Footer.css';
 
 export function Footer() {
+  const uptime = useUptimeLabel();
+
   return (
     <footer className="foot">
       <ZigzagBand color="var(--cyan)" flip />
@@ -13,7 +16,7 @@ export function Footer() {
             <div>
               <p className="foot-cat-name">
                 图标上的这位
-                <span className="mono">亮灯 {daysLit()} 天</span>
+                <span className="mono">{uptime}</span>
               </p>
               <p className="foot-cat-line">白天睡觉，晚上守着你的数据。</p>
             </div>

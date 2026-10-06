@@ -22,8 +22,11 @@ export const APK_URL_MIRROR = `https://yiyanr2.8765777.xyz/app/${APK_FILE}`;
 
 export const APP_VERSION = '2.7.3';
 
-/** 仓库里第一个提交的日期（主仓库 README 记载的项目创建时间） */
-export const FIRST_LIGHT = '2026-07-22T00:00:00+08:00';
+/**
+ * 计时起点。页面上的「已运行 N 天 SS 秒」就是从这个时刻开始数的，每秒跳一次。
+ * （主仓库第一次提交是 2026-07-22，那个数字已经不展示了，别跟这里搞混。）
+ */
+export const RUN_SINCE = new Date('2026-10-01T00:00:00+08:00').getTime();
 
 export const LINKS = {
   source: 'https://github.com/sideonkeibulllll/yiyan-personal-database',
@@ -37,8 +40,26 @@ export const LINKS = {
 /** 12.55 MB —— 按 MiB 换算，和浏览器显示的体积一致 */
 export const APK_SIZE_LABEL = (APK_BYTES / 1024 / 1024).toFixed(1) + ' MB';
 
-/** 图书馆连续亮灯天数：从第一次提交算起，真实计算，不写死 */
-export function daysLit(): number {
-  const start = new Date(FIRST_LIGHT).getTime();
-  return Math.max(1, Math.floor((Date.now() - start) / 86400000) + 1);
+export type Uptime = {
+  /** 整天天数 */
+  days: number;
+  /** 当前这一分钟里走过的秒数（0–59）—— 就是那个每秒在跳的数字 */
+  seconds: number;
+  totalSeconds: number;
+};
+
+/** 纯函数，便于单测；不读时钟以外的任何东西 */
+export function elapsedSince(start = RUN_SINCE, now = Date.now()): Uptime {
+  const totalSeconds = Math.max(0, Math.floor((now - start) / 1000));
+  return {
+    days: Math.floor(totalSeconds / 86400),
+    seconds: totalSeconds % 60,
+    totalSeconds,
+  };
 }
+
+/** 秒补零，否则等宽字体下 9 → 10 会多跳一格 */
+export function formatUptime(u: Uptime): string {
+  return `已运行 ${u.days} 天 ${String(u.seconds).padStart(2, '0')} 秒`;
+}
+

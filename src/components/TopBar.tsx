@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { APP_VERSION, daysLit } from '../data/site';
+import { APP_VERSION } from '../data/site';
+import { useUptimeLabel } from '../hooks/useUptime';
 import './TopBar.css';
 
 const NAV = [
@@ -22,6 +23,7 @@ function Mark() {
 
 export function TopBar() {
   const [solid, setSolid] = useState(false);
+  const uptime = useUptimeLabel();
 
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 40);
@@ -50,9 +52,9 @@ export function TopBar() {
         </nav>
 
         <div className="top-right">
-          <span className="lit mono" title="从仓库第一次提交算起的真实天数">
+          <span className="lit mono" title="从 2026-10-01 00:00 起算，每秒更新一次">
             <i className="dot" />
-            亮灯 {daysLit()} 天
+            {uptime}
           </span>
           <a className="top-cta" href="#download">
             下载
