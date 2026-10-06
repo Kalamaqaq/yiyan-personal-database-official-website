@@ -7,6 +7,22 @@
 (function () {
   'use strict';
 
+  /** 设置屏的 12 个分页 ↔ 原应用 SettingsPage 的 TAB_LIST */
+  var SETTINGS = {
+    'AI 配置': 'ai',
+    '待办配置': 'todo',
+    '随机浏览': 'random',
+    '数据管理': 'dataManager',
+    '导入': 'import',
+    '导出': 'export',
+    '本地备份': 'backup',
+    '数据恢复': 'restore',
+    '云端备份': 'cloud',
+    '设备互通': 'sync',
+    '提示词': 'prompts',
+    'GLM 配置': 'glm',
+  };
+
   var NAV = { '录入': 'home', '随机': 'random', '待办': 'todo', 'Chat': 'chat', '设置': 'settings' };
   var QUICK = { '决定转盘': 'wheel', '备忘录': 'memo', '随机浏览': 'random' };
   var IDS = ['home', 'random', 'todo', 'chat', 'settings', 'wheel', 'memo'];
@@ -64,6 +80,27 @@
     syncReopen();
   }
 
+  /* -------------------------------------------------- 设置屏的 12 个分页
+
+     原应用一屏只渲染当前分页。快照把 12 份面板都拼进了 main.settings-content，
+     靠 [hidden] 控制谁露面 —— 点侧栏就切一份，和真机手感一致。 */
+
+  function showSettingsPanel(key) {
+    var items = document.querySelectorAll('.settings-nav-item');
+    for (var i = 0; i < items.length; i++) {
+      var k = SETTINGS[items[i].textContent.trim()];
+      items[i].classList.toggle('active', k === key);
+    }
+
+    var panels = document.querySelectorAll('[data-pv-tab]');
+    for (var j = 0; j < panels.length; j++) {
+      panels[j].hidden = panels[j].getAttribute('data-pv-tab') !== key;
+    }
+
+    var box = document.querySelector('main.settings-content');
+    if (box) box.scrollTop = 0;
+  }
+
   /* ------------------------------------------------------------ 转盘会转 */
 
   function spin() {
@@ -103,6 +140,17 @@
       e.preventDefault();
       closeChatSidebar();
       return show('home');
+    }
+
+    // 设置屏的侧栏分页
+    var sNav = t.closest && t.closest('.settings-nav-item');
+    if (sNav) {
+      var sKey = SETTINGS[sNav.textContent.trim()];
+      if (sKey) {
+        e.preventDefault();
+        return showSettingsPanel(sKey);
+      }
+      return; // 没映射到的项就当没接线的按钮，别让它冒泡出去
     }
 
     // 底栏

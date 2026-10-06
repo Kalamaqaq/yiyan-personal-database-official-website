@@ -52,6 +52,46 @@ async function readApkInfo() {
   return { file, label: (bytes / 1024 / 1024).toFixed(1) + ' MB' };
 }
 
+/** 设置屏是 12 个分页；一次快照只能抓到当时那一页，所以这里把 12 份面板并排拼回去 */
+const SETTINGS_TABS = [
+  'ai',
+  'todo',
+  'random',
+  'dataManager',
+  'import',
+  'export',
+  'backup',
+  'restore',
+  'cloud',
+  'sync',
+  'prompts',
+  'glm',
+];
+
+async function assembleSettings(html) {
+  const panels = [];
+  for (const key of SETTINGS_TABS) {
+    const file = join(SRC, `settings-panel-${key}.html`);
+    if (!(await exists(file))) continue;
+    const frag = (await readFile(file, 'utf8')).trim();
+    const hidden = key === 'ai' ? '' : ' hidden';
+    // 面板自带 .settings-panel-content（原应用的类），只在开标签上补标记，不额外包壳
+    panels.push(
+      frag.replace(
+        /^<div class="settings-panel-content"/,
+        `<div class="settings-panel-content" data-pv-tab="${key}"${hidden}`
+      )
+    );
+  }
+  if (panels.length < 2) return html;
+
+  // 用函数式替换，避免面板正文里的 $& 之类被当成替换模式
+  return html.replace(
+    /(<main class="settings-content"[^>]*>)[\s\S]*?(<\/main>)/,
+    (_m, open, close) => open + panels.join('') + close
+  );
+}
+
 async function buildCss() {
   const dir = join(main, 'dist', 'assets');
   let files = [];
@@ -82,7 +122,8 @@ async function buildHtml() {
   const apk = await readApkInfo();
   const blocks = [];
   for (const s of SCREENS) {
-    const raw = await readFile(join(SRC, `${s.id}.html`), 'utf8');
+    let raw = await readFile(join(SRC, `${s.id}.html`), 'utf8');
+    if (s.id === 'settings') raw = await assembleSettings(raw);
     blocks.push(
       `<section class="screen" data-screen="${s.id}" aria-label="${s.label}"${
         s.id === 'home' ? '' : ' hidden'

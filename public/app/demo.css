@@ -23,6 +23,12 @@ body {
   display: none;
 }
 
+/* 设置屏：12 个分页面板就挂在 main.settings-content 里，同一套 .settings-panel-content
+   自己带 display:flex，所以 [hidden] 同样要显式压回来 */
+.settings-panel-content[hidden] {
+  display: none;
+}
+
 /* ==========================================================================
    开屏说明：默认显示、居中、不自动消失
    ========================================================================== */
