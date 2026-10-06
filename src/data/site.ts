@@ -5,6 +5,9 @@
  * 官网可以说得动人，但不能说一句查不到出处的话。
  */
 
+/** 当前发布的 App 版本（换版本号时这是第一处要改的） */
+export const APP_VERSION = '2.7.3';
+
 /** 主仓库 release/ 下的最新签名包 */
 export const APK_FILE = 'yiyan-personal-database-v2.7.3-release.apk';
 
@@ -17,10 +20,16 @@ export const APK_SHA256 =
 /** 本站直链（Vercel 静态托管） */
 export const APK_URL_PRIMARY = `./download/${APK_FILE}`;
 
-/** 备用镜像：Cloudflare R2 公开域（来自主仓库 .env 的 VITE_CF_R2_PUBLIC_DOMAIN） */
-export const APK_URL_MIRROR = `https://yiyanr2.8765777.xyz/app/${APK_FILE}`;
-
-export const APP_VERSION = '2.7.3';
+/** 备用镜像：Cloudflare R2 公开域（来自主仓库 .env 的 VITE_CF_R2_PUBLIC_DOMAIN）
+ *
+ * ⚠️ 末尾的 `?v=` 不是装饰，别删：
+ * R2 公开域返回的 404 带着 `Cache-Control: max-age=14400`，而 Cloudflare 会把它一起缓存。
+ * 于是**只要有人在文件上传前访问过这个路径，之后 4 小时内所有人拿到的都是那个缓存的 404**
+ * （实测 `cf-cache-status: HIT`）。把版本号拼进 query 当缓存键，每次发新版都是全新 URL，
+ * 既绕开旧 404，也让它永远撞不上。
+ *
+ * 注意 APP_VERSION 必须声明在这行之前，否则 TS2448（用过才知道疼）。 */
+export const APK_URL_MIRROR = `https://yiyanr2.8765777.xyz/app/${APK_FILE}?v=${APP_VERSION}`;
 
 /**
  * 计时起点。页面上的「已运行 N 天 SS 秒」就是从这个时刻开始数的，每秒跳一次。

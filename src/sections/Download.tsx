@@ -28,7 +28,14 @@ export function DownloadSection() {
     }
   };
 
-  /** 备用镜像先探活再跳转：宁可说「还没上线」，也不甩个 404 白页给访客 */
+  /**
+   * 备用镜像：先探活再跳转，宁可说「还没上线」，也不甩个 404 白页给访客。
+   *
+   * ⚠️ catch 里必须 fail-open（当作可达直接跳），不能判成「镜像挂了」：
+   * 这是一次**跨域** HEAD，而 R2 公开域默认不返回 Access-Control-Allow-Origin，
+   * 浏览器会直接以 "Failed to fetch" 拦下来 —— 那是 CORS，不是镜像不可用。
+   * 早期版本把 catch 当成 down，结果是「镜像明明在线，按钮却永远说它没上线」的假阴性。
+   */
   const openMirror = async () => {
     setMirror('checking');
     try {
@@ -37,10 +44,13 @@ export function DownloadSection() {
         setMirror('ok');
         window.location.href = APK_URL_MIRROR;
       } else {
+        // 探活成功但对象不存在（4xx/5xx）—— 这才是真的没上线
         setMirror('down');
       }
     } catch {
-      setMirror('down');
+      // 多半是 CORS/网络层拦截，读不到状态。当成可达，直接交给浏览器下载
+      setMirror('idle');
+      window.location.href = APK_URL_MIRROR;
     }
   };
 
@@ -137,7 +147,7 @@ export function DownloadSection() {
           </div>
 
           <Reveal delay={140} className="dl-right">
-            <h3 className="h3">装它有三步，只有一步可能卡住</h3>
+            <h3 className="h3">装它有三步</h3>
             <ol className="dl-steps">
               {INSTALL_STEPS.map((s, i) => (
                 <li key={s}>
