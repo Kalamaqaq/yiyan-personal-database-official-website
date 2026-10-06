@@ -2,7 +2,8 @@
    /app/ 界面预览 · 演示壳
    --------------------------------------------------------------------------
    app.css 是主项目生产 CSS 的原样拼接，一个字都没改。
-   这个文件只负责两件事：① 把 7 屏塞进一个假装是 #root 的容器里；② 那个提示条。
+   这个文件只负责：① 把 7 屏塞进一个假装是 #root 的容器；② 开屏说明；③ 重开说明的小按钮。
+   全部用主项目自己的 CSS 变量，所以看起来是应用的一部分，而不是外挂的皮。
    ========================================================================== */
 
 html,
@@ -22,45 +23,180 @@ body {
   display: none;
 }
 
-.pv-toast {
+/* ==========================================================================
+   开屏说明：默认显示、居中、不自动消失
+   ========================================================================== */
+
+.pv-mask {
   position: fixed;
-  left: 50%;
-  bottom: calc(86px + env(safe-area-inset-bottom, 0px));
-  z-index: 999;
-  width: min(340px, calc(100vw - 32px));
-  transform: translateX(-50%);
-  padding: 11px 14px;
-  border-radius: var(--radius-lg, 10px);
-  background: rgba(40, 41, 47, 0.94);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border: 1px solid var(--color-border-accent, rgba(247, 103, 7, 0.3));
-  box-shadow: var(--shadow-lg, 0 8px 24px rgba(0, 0, 0, 0.55));
-  color: var(--color-text-secondary, #adb5bd);
-  font-size: var(--text-xs, 11px);
-  line-height: 1.7;
-  text-align: center;
-  /* 提示条永远不挡操作：它盖着首页最后两张快捷卡，
-     用 pointer-events:none 让点击直接穿过去，靠 window 上的 pointerdown 收掉它 */
-  pointer-events: none;
-  transition:
-    opacity 420ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
-    transform 420ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+  inset: 0;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background: rgba(8, 9, 11, 0.78);
+  backdrop-filter: blur(4px) saturate(120%);
+  -webkit-backdrop-filter: blur(4px) saturate(120%);
+  animation: pvFade var(--duration-normal, 280ms) var(--ease-out, ease-out);
 }
 
-.pv-toast strong {
+.pv-mask[hidden] {
+  display: none;
+}
+
+@keyframes pvFade {
+  from {
+    opacity: 0;
+  }
+}
+
+.pv-card {
+  width: min(430px, 100%);
+  max-height: calc(100dvh - 44px);
+  overflow-y: auto;
+  padding: 26px 22px 20px;
+  border-radius: var(--radius-xl, 12px);
+  background: var(--color-bg-elevated, #28292f);
+  border: 1px solid var(--color-border-accent, rgba(247, 103, 7, 0.3));
+  box-shadow: var(--shadow-lg, 0 8px 24px rgba(0, 0, 0, 0.55));
+  text-align: center;
+  animation: pvRise var(--duration-normal, 280ms) var(--ease-out, ease-out);
+}
+
+@keyframes pvRise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+}
+
+.pv-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 11px;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--color-accent-subtle, rgba(247, 103, 7, 0.08));
+  border: 1px solid var(--color-border-accent, rgba(247, 103, 7, 0.3));
   color: var(--color-accent-primary, #f76707);
+  font-size: var(--text-xs, 11px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.pv-title {
+  margin: 14px 0 10px;
+  font-size: var(--text-xl, 20px);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary, #f8f9fa);
+}
+
+.pv-text {
+  margin: 0 0 20px;
+  font-size: var(--text-sm, 13px);
+  line-height: 1.85;
+  color: var(--color-text-tertiary, #868e96);
+  text-align: left;
+}
+
+.pv-text b {
+  color: var(--color-warning, #fab005);
   font-weight: 600;
 }
 
-.pv-toast.out {
-  opacity: 0;
-  transform: translate(-50%, 12px);
-  pointer-events: none;
+.pv-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  border-radius: var(--radius-lg, 10px);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast, 180ms) var(--ease-out, ease-out),
+    background var(--duration-fast, 180ms) var(--ease-out, ease-out),
+    border-color var(--duration-fast, 180ms) var(--ease-out, ease-out);
+}
+
+.pv-btn:active {
+  transform: scale(0.975);
+}
+
+.pv-btn-main {
+  background: var(--color-accent-primary, #f76707);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(247, 103, 7, 0.22);
+}
+
+.pv-btn-main:hover {
+  background: var(--color-accent-secondary, #fb7a3b);
+}
+
+.pv-btn-ghost {
+  margin-top: 10px;
+  background: transparent;
+  border: 1px solid var(--color-border-primary, rgba(255, 255, 255, 0.08));
+  color: var(--color-text-secondary, #adb5bd);
+}
+
+.pv-btn-ghost:hover {
+  border-color: var(--color-border-accent, rgba(247, 103, 7, 0.3));
+  color: var(--color-text-primary, #f8f9fa);
+}
+
+.pv-foot {
+  margin: 16px 0 0;
+  font-size: var(--text-xs, 11px);
+  color: var(--color-text-disabled, #495057);
+  letter-spacing: 0.02em;
+}
+
+/* 关掉说明之后，右下角留一个很轻的「?」把说明叫回来。
+   做成小圆点而不是文字 pills —— 文字 pills 会压在 Chat 的输入框上，看着像应用的组件。 */
+.pv-reopen {
+  position: fixed;
+  right: 10px;
+  bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  z-index: 997;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(40, 41, 47, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--color-border-primary, rgba(255, 255, 255, 0.08));
+  color: var(--color-text-tertiary, #868e96);
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.55;
+  cursor: pointer;
+  transition:
+    opacity var(--duration-fast, 180ms) var(--ease-out, ease-out),
+    color var(--duration-fast, 180ms) var(--ease-out, ease-out),
+    border-color var(--duration-fast, 180ms) var(--ease-out, ease-out);
+}
+
+.pv-reopen[hidden] {
+  display: none;
+}
+
+.pv-reopen:hover {
+  opacity: 1;
+  color: var(--color-accent-primary, #f76707);
+  border-color: var(--color-border-accent, rgba(247, 103, 7, 0.3));
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pv-toast {
-    transition: none;
+  .pv-mask,
+  .pv-card {
+    animation: none;
   }
 }

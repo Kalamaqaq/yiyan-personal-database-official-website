@@ -59,7 +59,7 @@ export function Maker() {
                 </div>
               </dl>
 
-              <p className="mk-close">没什么故事。真的。</p>
+              <p className="mk-close">风带来故事的种子，时间使之发芽。</p>
             </div>
           </div>
         </Reveal>

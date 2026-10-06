@@ -10,7 +10,7 @@
  *
  * 只读主项目，不写主项目。
  */
-import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, readdir, mkdir, access, stat } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 
 const DEFAULT_MAIN = 'C:/Users/tianming/Desktop/test/yiyan-personal-database';
@@ -31,19 +31,55 @@ const SCREENS = [
   { id: 'memo', label: '备忘录' },
 ];
 
+async function exists(p) {
+  try {
+    await access(p);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * 从官网自己的事实源里读 APK 信息。
+ * 预览页的下载按钮必须和下载区显示同一个数字 —— 两处各写一次早晚会对不上。
+ */
+async function readApkInfo() {
+  const ts = await readFile(join(here, 'src', 'data', 'site.ts'), 'utf8');
+  const file = ts.match(/APK_FILE\s*=\s*'([^']+)'/)?.[1];
+  const bytes = Number(ts.match(/APK_BYTES\s*=\s*(\d+)/)?.[1]);
+  if (!file || !bytes) throw new Error('读不到 src/data/site.ts 里的 APK_FILE / APK_BYTES');
+  return { file, label: (bytes / 1024 / 1024).toFixed(1) + ' MB' };
+}
+
 async function buildCss() {
   const dir = join(main, 'dist', 'assets');
-  const files = (await readdir(dir)).filter((f) => f.endsWith('.css')).sort();
-  if (!files.length) throw new Error(`找不到主项目 CSS：${dir}\n请先在主项目执行 npm run build`);
+  let files = [];
+  try {
+    files = (await readdir(dir)).filter((f) => f.endsWith('.css')).sort();
+  } catch {
+    files = [];
+  }
+
+  // Vercel 上读不到本机的主项目 —— 这不是错误，public/app/app.css 已经入库了，直接用。
+  // 只有本地（主项目在）才重新拼。缺了这段，线上构建会直接挂掉。
+  if (!files.length) {
+    const existing = join(OUT, 'app.css');
+    if (await exists(existing)) {
+      return { count: 0, bytes: (await stat(existing)).size, skipped: true };
+    }
+    throw new Error(`找不到主项目 CSS：${dir}\n请先在主项目执行 npm run build`);
+  }
 
   const parts = [];
   for (const f of files) parts.push(await readFile(join(dir, f), 'utf8'));
   const css = `/* 记忆库 · 由主项目 dist 的生产 CSS 原样拼接（build-preview.mjs） */\n${parts.join('\n')}\n`;
   await writeFile(join(OUT, 'app.css'), css, 'utf8');
-  return { count: files.length, bytes: Buffer.byteLength(css) };
+  return { count: files.length, bytes: Buffer.byteLength(css), skipped: false };
 }
 
 async function buildHtml() {
+  const apk = await readApkInfo();
   const blocks = [];
   for (const s of SCREENS) {
     const raw = await readFile(join(SRC, `${s.id}.html`), 'utf8');
@@ -69,9 +105,21 @@ async function buildHtml() {
   </head>
   <body>
 ${blocks.join('\n')}
-    <div class="pv-toast" id="pvToast" role="status">
-      这是<strong>静态界面预览</strong>：数据是编的，按钮不会真的干活。点底部图标或首页快捷卡片可以切页。
+
+    <!-- 开屏说明：默认就在屏幕正中，不自动消失。关掉之后本次会话不再出现 -->
+    <div class="pv-mask" id="pvMask" role="dialog" aria-modal="true" aria-labelledby="pvTitle">
+      <div class="pv-card">
+        <span class="pv-badge">界面预览</span>
+        <h2 class="pv-title" id="pvTitle">这里只有长相，没有逻辑</h2>
+        <p class="pv-text">下面这 7 屏是从 Android 版真实抓下来的界面，<b>数据是编的，按钮按下去不会真的干活</b>。点底部图标或首页快捷卡片可以切页；Chat 那屏要从左上角菜单展开侧栏、再点「退出」才能回来。</p>
+        <a class="pv-btn pv-btn-main" href="../download/${apk.file}" download>
+          下载 APK · ${apk.label}
+        </a>
+        <button class="pv-btn pv-btn-ghost" id="pvGo" type="button">先看看界面</button>
+        <p class="pv-foot">Android 5.1 以上 · 不用注册 · 断网能用</p>
+      </div>
     </div>
+    <button class="pv-reopen" id="pvReopen" type="button" title="界面预览说明" aria-label="界面预览说明" hidden>?</button>
     <script src="./demo.js"></script>
   </body>
 </html>
@@ -83,6 +131,10 @@ ${blocks.join('\n')}
 await mkdir(OUT, { recursive: true });
 const css = await buildCss();
 const htmlBytes = await buildHtml();
-console.log(`✓ app.css  ← ${css.count} 个文件，${(css.bytes / 1024).toFixed(1)} KB`);
+console.log(
+  css.skipped
+    ? `↷ 找不到主项目 dist，沿用已入库的 app.css（${(css.bytes / 1024).toFixed(1)} KB）`
+    : `✓ app.css  ← ${css.count} 个文件，${(css.bytes / 1024).toFixed(1)} KB`
+);
 console.log(`✓ index.html ← ${SCREENS.length} 屏，${(htmlBytes / 1024).toFixed(1)} KB`);
-console.log('  预览：npm run dev 后打开 /app/index.html');
+console.log('  预览：npm run dev 后打开 /app/');

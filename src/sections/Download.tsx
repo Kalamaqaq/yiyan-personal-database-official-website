@@ -69,8 +69,7 @@ export function DownloadSection() {
           <div className="dl-left">
             <Reveal delay={100}>
               <p className="lede dl-lede">
-                免费。没有广告，没有会员，没有「升级到专业版」的弹窗。
-                你装完就跟我没关系了 —— 这大概是件好事。
+                免费。没有广告，没有会员，没有「升级到专业版」的弹窗。开箱即用
               </p>
             </Reveal>
 
@@ -89,7 +88,7 @@ export function DownloadSection() {
                 </button>
                 {mirror === 'down' && (
                   <span className="dl-mirror-msg">
-                    镜像还没上线，用上面的按钮就行 —— 同一个文件。
+                    镜像还没上线，用上面的按钮就行
                   </span>
                 )}
               </div>

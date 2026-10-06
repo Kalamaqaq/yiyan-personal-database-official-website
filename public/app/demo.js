@@ -1,8 +1,8 @@
 /* ==========================================================================
    /app/ 界面预览 · 唯一的脚本
    --------------------------------------------------------------------------
-   只做三件事：切屏（走 hash，所以浏览器返回键能用）、转盘能转、首次提示一次。
-   没有数据层、没有请求、没有依赖。整个文件不到 3 KB。
+   只做四件事：切屏、Chat 侧栏开合、转盘能转、开屏说明的开关。
+   没有数据层、没有请求、没有依赖。整个文件几 KB。
    ========================================================================== */
 (function () {
   'use strict';
@@ -15,6 +15,8 @@
   for (var i = 0; i < IDS.length; i++) {
     screens[IDS[i]] = document.querySelector('[data-screen="' + IDS[i] + '"]');
   }
+
+  /* ---------------------------------------------------------------- 切屏 */
 
   function currentId() {
     var h = (location.hash || '').replace(/^#\/?/, '');
@@ -31,10 +33,39 @@
       var want = id === 'home' ? '#/' : '#/' + id;
       if (location.hash !== want) location.hash = want;
     }
+    closeChatSidebar();
     window.scrollTo(0, 0);
   }
 
-  /** 转盘能转：直接改那个 <g> 的内联 transform，和真机用的是同一套角度逻辑 */
+  /* ------------------------------------------------- Chat 侧栏（唯一出口）
+
+     真机上 Chat 页没有底栏，返回路径是：左上角菜单 → 侧栏 → 底部「退出」。
+     预览里必须把这条链补上，否则访客进 Chat 就出不来。 */
+
+  function openChatSidebar() {
+    var page = document.querySelector('.chat-page');
+    if (!page || page.classList.contains('sidebar-open')) return;
+    page.classList.add('sidebar-open');
+    // 原应用只在 sidebarOpen 时才渲染这层遮罩，抓下来的静态 DOM 里没有，得自己补
+    if (!document.getElementById('pvOverlay')) {
+      var ov = document.createElement('div');
+      ov.className = 'sidebar-overlay';
+      ov.id = 'pvOverlay';
+      page.insertBefore(ov, page.firstChild);
+    }
+    syncReopen();
+  }
+
+  function closeChatSidebar() {
+    var page = document.querySelector('.chat-page');
+    if (page) page.classList.remove('sidebar-open');
+    var ov = document.getElementById('pvOverlay');
+    if (ov && ov.parentNode) ov.parentNode.removeChild(ov);
+    syncReopen();
+  }
+
+  /* ------------------------------------------------------------ 转盘会转 */
+
   function spin() {
     var g = document.querySelector('.wheel-canvas-svg > g');
     if (!g) return;
@@ -44,9 +75,37 @@
     g.style.transform = 'rotate(' + deg + 'deg)';
   }
 
+  /* ------------------------------------------------------------------ 事件 */
+
   document.addEventListener('click', function (e) {
     var t = e.target;
 
+    // 开屏说明
+    if (t.closest && t.closest('#pvGo')) {
+      e.preventDefault();
+      return setNotice(false);
+    }
+    if (t.closest && t.closest('#pvReopen')) {
+      e.preventDefault();
+      return setNotice(true);
+    }
+
+    // Chat 侧栏
+    if (t.closest && t.closest('.chat-menu-btn')) {
+      e.preventDefault();
+      return openChatSidebar();
+    }
+    if (t.closest && (t.closest('.sidebar-close') || t.closest('#pvOverlay'))) {
+      e.preventDefault();
+      return closeChatSidebar();
+    }
+    if (t.closest && t.closest('.sidebar-exit-btn')) {
+      e.preventDefault();
+      closeChatSidebar();
+      return show('home');
+    }
+
+    // 底栏
     var nav = t.closest && t.closest('.nav-item');
     if (nav) {
       var labelEl = nav.querySelector('.nav-label');
@@ -57,6 +116,7 @@
       }
     }
 
+    // 首页快捷卡
     var quick = t.closest && t.closest('.quick-btn');
     if (quick) {
       var txt = quick.textContent.trim();
@@ -69,11 +129,13 @@
       return;
     }
 
+    // 返回箭头（转盘 / 备忘录）
     if (t.closest && t.closest('[title="返回"]')) {
       e.preventDefault();
       return show('home');
     }
 
+    // 转盘 GO
     if (t.closest && t.closest('.wheel-go-btn')) {
       e.preventDefault();
       return spin();
@@ -84,15 +146,25 @@
     show(currentId(), true);
   });
 
-  show(currentId(), true);
+  /* ------------------------------------------------------------ 开屏说明 */
 
-  /* 首次提示一次就自动退场，之后界面保持和真机一致 */
-  var toast = document.getElementById('pvToast');
-  if (toast) {
-    var kill = function () {
-      toast.classList.add('out');
-    };
-    setTimeout(kill, 5600);
-    window.addEventListener('pointerdown', kill, { once: true });
+  var mask = document.getElementById('pvMask');
+  var reopen = document.getElementById('pvReopen');
+
+  /** 「?」只在说明关着、且 Chat 侧栏没展开时出现（展开时它会被压在遮罩上） */
+  function syncReopen() {
+    if (!reopen) return;
+    var drawer = document.querySelector('.chat-page.sidebar-open');
+    reopen.hidden = !(mask && mask.hidden) || !!drawer;
   }
+
+  function setNotice(on) {
+    if (mask) mask.hidden = !on;
+    syncReopen();
+  }
+
+  // 默认就在，不自动消失；关掉后留个小「?」能叫回来
+  setNotice(true);
+
+  show(currentId(), true);
 })();

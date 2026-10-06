@@ -91,14 +91,11 @@ export const SPECS: { k: string; v: string; accent?: 'pink' | 'cyan' | 'yellow' 
 ];
 
 export const MAKER: { k: string; v: string; href?: string }[] = [
-  { k: '作者', v: '一个人' },
-  { k: '性质', v: '不是公司' },
+  { k: '作者', v: '人' },
   { k: '为什么做', v: '自己要用' },
-  { k: '团队', v: '没有' },
-  { k: '融资', v: '没有' },
-  { k: '排期', v: '看心情' },
+  { k: '更新频率', v: '看心情' },
   {
-    k: '想找人',
+    k: '个人博客',
     v: 'blog.8765777.xyz',
     href: 'https://blog.8765777.xyz',
   },
