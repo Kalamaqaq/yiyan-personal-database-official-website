@@ -139,5 +139,15 @@
       </div>
     </noscript>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!--
+      访问量统计：自托管 Umami（Cloudflare 反代），不设 Cookie、不存个人信息。
+      放body 末尾而不是<head>：避免和首屏开屏动画抢带宽。
+    -->
+    <script
+      defer
+      src="https://umami.8765777.xyz/script.js"
+      data-website-id="c92e77fd-10c8-4711-a8e4-9317774365d5"
+    ></script>
   </body>
 </html>

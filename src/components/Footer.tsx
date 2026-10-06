@@ -56,7 +56,7 @@ export function Footer() {
 
         <div className="foot-bot">
           <span className="mono foot-c">
-            本站没有统计脚本，也没有 Cookie。所以我不知道你是谁 —— 也不需要知道。
+            本站使用开源协议 CC BY-NC 4.0
           </span>
           <span className="mono foot-sig">记忆库 · 一个人做的</span>
         </div>
