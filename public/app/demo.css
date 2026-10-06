@@ -1,0 +1,66 @@
+/* ==========================================================================
+   /app/ 界面预览 · 演示壳
+   --------------------------------------------------------------------------
+   app.css 是主项目生产 CSS 的原样拼接，一个字都没改。
+   这个文件只负责两件事：① 把 7 屏塞进一个假装是 #root 的容器里；② 那个提示条。
+   ========================================================================== */
+
+html,
+body {
+  margin: 0;
+}
+
+/* 等价于主项目的 #root{min-height:100dvh;display:flex;flex-direction:column} */
+.screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* hidden 属性默认的 display:none 会被上面的 display:flex 盖掉，必须显式写回来 */
+.screen[hidden] {
+  display: none;
+}
+
+.pv-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(86px + env(safe-area-inset-bottom, 0px));
+  z-index: 999;
+  width: min(340px, calc(100vw - 32px));
+  transform: translateX(-50%);
+  padding: 11px 14px;
+  border-radius: var(--radius-lg, 10px);
+  background: rgba(40, 41, 47, 0.94);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--color-border-accent, rgba(247, 103, 7, 0.3));
+  box-shadow: var(--shadow-lg, 0 8px 24px rgba(0, 0, 0, 0.55));
+  color: var(--color-text-secondary, #adb5bd);
+  font-size: var(--text-xs, 11px);
+  line-height: 1.7;
+  text-align: center;
+  /* 提示条永远不挡操作：它盖着首页最后两张快捷卡，
+     用 pointer-events:none 让点击直接穿过去，靠 window 上的 pointerdown 收掉它 */
+  pointer-events: none;
+  transition:
+    opacity 420ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    transform 420ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.pv-toast strong {
+  color: var(--color-accent-primary, #f76707);
+  font-weight: 600;
+}
+
+.pv-toast.out {
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pv-toast {
+    transition: none;
+  }
+}

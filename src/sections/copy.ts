@@ -69,25 +69,25 @@ export const SIX: { no: string; title: string; body: string; own: string }[] = [
 ];
 
 export const SPECS: { k: string; v: string; accent?: 'pink' | 'cyan' | 'yellow' }[] = [
-  { k: '体积', v: '12.5 MB。就这么多，不用怀疑是不是少打包了什么。', accent: 'yellow' },
-  { k: '账号', v: '没有。装完直接用。我不需要认识你。' },
+  { k: '体积', v: '12.5 MB。启动速度 0.5s（至少在我老人机上）。', accent: 'yellow' },
+  { k: '账号', v: '没有。装完直接用。' },
   {
     k: '网络',
-    v: '断网能用。数据在你手机里，不在我这儿 —— 这句话是真的，不是文案。',
+    v: '断网能用。我也没钱买服务器提供备份服务(qwq)',
     accent: 'cyan',
   },
   {
     k: 'AI',
-    v: '你自己填 Key —— DeepSeek、硅基流动，或者白嫖 GLM 的免费池。所以你的内容不经过我。',
+    v: '你自己填 Key —— DeepSeek、硅基流动，或者白嫖 GLM 的免费池。',
   },
   {
     k: '云备份',
-    v: '可选。想开就自己填一次 token。注意：备忘录里的图片不跟着备份 —— 这个我确实没修，先告诉你。',
+    v: '可选。有能力的可以到我的github部署个中转站+r2方案,没能力的可以将导出的zip扔到qq私人群文件里',
     accent: 'pink',
   },
-  { k: '平台', v: 'Android 5.1 以上。桌面版停在 2.0.4，别装。iOS 没有，也不打算有。' },
+  { k: '平台', v: 'Android 5.1 以上。windows版比较旧。iOS 没有，也不打算有。' },
   { k: '源码', v: 'GitHub 上，CC BY-NC 4.0 —— 能读、能改、不能卖。' },
-  { k: '埋点', v: '零。这个网页也没有。我不知道你是谁，也不需要知道。' },
+  { k: '埋点', v: '零。我们也只是陌生人罢了，前世五百次的回眸，才换来今生的擦肩而过。' },
 ];
 
 export const MAKER: { k: string; v: string; href?: string }[] = [

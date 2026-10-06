@@ -191,6 +191,11 @@
   color: var(--ink-2);
 }
 
+.dl-notes strong {
+  color: var(--yellow);
+  font-weight: 800;
+}
+
 .dl-links {
   display: flex;
   flex-wrap: wrap;

@@ -79,7 +79,7 @@ export function DownloadSection() {
                 下载 APK · {APK_SIZE_LABEL}
               </a>
               <a className="btn btn-line" href="./app/" target="_blank" rel="noreferrer">
-                先在浏览器里玩一下
+                看看界面长什么样
                 <span className="ar">↗</span>
               </a>
 
@@ -150,10 +150,11 @@ export function DownloadSection() {
 
             <div className="dl-notes">
               <div>
-                <h4 className="mono">网页版</h4>
+                <h4 className="mono">界面预览</h4>
                 <p>
-                  和 Android 版同一套代码，数据存在浏览器本地。第一次打开要等几秒，
-                  换个浏览器或者清缓存就等于换一台新设备 —— 这是浏览器的限制，不是 bug。
+                  上面那个按钮打开的是<strong>静态预览</strong>：7 屏真实界面，数据是编的，按钮按下去不会真的干活。
+                  之所以不做成能用的网页版，是因为那要拖着 SQLite 一起走 —— 光数据库就得 660 KB，
+                  而这一整页预览只有 240 KB。真身是 Android 版，装完才有逻辑。
                 </p>
               </div>
               <div>

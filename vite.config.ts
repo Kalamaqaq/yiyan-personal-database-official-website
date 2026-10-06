@@ -10,8 +10,27 @@ import react from '@vitejs/plugin-react';
  * - base: './' 让产物可以在任意子路径下加载（Vercel 根路径 / 本地 file 预览皆可）。
  * - 不使用 CDN：目标用户在国内，任何境外字体/脚本 CDN 都是首屏风险。
  */
+/**
+ * dev 下让 /app/（目录形式）落到 /app/index.html。
+ * 生产不需要它 —— Vercel 与 vite preview 都会自己解析目录索引；
+ * 只有 Vite dev server 会把 /app/ 交给 SPA 回退，返回落地页。
+ */
+function appPreviewDirIndex() {
+  return {
+    name: 'app-preview-dir-index',
+    configureServer(server) {
+      server.middlewares.use((req, _res, next) => {
+        if (req.url && /^\/app\/?(\?|$)/.test(req.url)) {
+          req.url = req.url.replace(/^\/app\/?/, '/app/index.html');
+        }
+        next();
+      });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), appPreviewDirIndex()],
   base: './',
   build: {
     outDir: 'dist',

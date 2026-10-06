@@ -39,11 +39,15 @@ src/
 │  └─ Closing     没了。
 └─ styles/        设计令牌与基础版式
 public/
-├─ app/           主项目 Web 构建的镜像（免安装试用），由脚本同步
-├─ download/      签名 APK，由脚本同步
-├─ assets/        sql-wasm.wasm（jeep-sqlite 走绝对路径 /assets 取它）
+├─ app/           /app/ 界面预览（静态 7 屏），由 build-preview.mjs 生成
+├─ download/      签名 APK，由 sync-apk.mjs 同步
 ├─ mascot-*.png   图标上的那位（圆框放大版）
 └─ og.jpg         社交分享图
+preview-source/
+└─ screens/       从真实 App 抓下来的 7 屏 DOM（预览的原料）
+scripts/
+├─ build-preview.mjs   原料 + 主项目 CSS → public/app/
+└─ sync-apk.mjs        主项目 release/ → public/download/
 ```
 
 ## 视觉与文案规格（改之前先读）
@@ -70,20 +74,34 @@ npm run build        # 产物在 dist/
 npm run preview      # 预览构建结果
 ```
 
-## 同步主项目的产物
+## /app/ 界面预览（静态复刻，不是能用的网页版）
 
-`public/app` 与 `public/download` **不要手改**，它们来自主仓库：
+`public/app/` 是官网上的「看看界面长什么样」那一页。它**故意不做成能用的应用**：
+
+- 它由 7 屏**从真实 App 抓下来的 DOM**组成（录入 / 随机 / 待办 / Chat / 设置 / 决定转盘 / 备忘录），
+  CSS 直接把主项目 `dist/assets/*.css` 原样拼接，所以是**逐像素级一致**（实测平均偏差 < 1.5%，
+  `random` 那 5% 是因为真机每次渲染都重新抽卡，属于内容不同而非版式不同）。
+- 全部算下来 **240 KB**。而主项目的真身 Web 构建是 2.8 MB —— 光 SQLite 的 `sql-wasm.wasm` 就 660 KB。
+  既然这一页只是「拿来看的」，就没必要拖着数据库走。
+- 唯一的脚本是 `demo.js`（3 KB）：切屏（走 hash，浏览器返回键可用）、转盘能转、首次提示一次。
+
+重新生成：
 
 ```bash
-npm run sync:app                       # 使用默认主项目路径
-node scripts/sync-app.mjs <主项目路径>   # 或显式指定
+npm run build:preview     # preview-source/screens/* + 主项目 dist/assets/*.css → public/app/
 ```
 
-同步脚本会：
-1. 把主项目 `dist/` 整体搬到 `public/app/`（主项目 `base: './'`，因此可任意子路径加载）
-2. 修正 index.html 里那条绝对路径的 favicon
-3. 把 `sql-wasm.wasm` 放到站点根 `assets/` 与 `app/assets/`（jeep-sqlite 取绝对路径）
-4. 从 `release/` 里挑版本最高的签名包放进 `public/download/`
+主项目的界面改了以后，需要重抓那 7 屏 DOM（用技能 `zero-dep-cdp-verify` 里的 CDP 客户端
+写一个「灌数据 → 逐屏抓 `#root.innerHTML`」的脚本），覆盖 `preview-source/screens/`，再跑上面的命令。
+
+## 同步安装包
+
+`public/download` **不要手改**，它来自主项目 `release/`：
+
+```bash
+npm run sync:apk                      # 使用默认主项目路径
+node scripts/sync-apk.mjs <主项目路径>  # 或显式指定
+```
 
 > ⚠️ 换了 App 版本号之后，必须同步修改 `src/data/site.ts` 的
 > `APK_FILE` / `APK_BYTES` / `APK_SHA256` / `APP_VERSION` 四项。
@@ -110,6 +128,8 @@ npx vercel --prod
 3. **AI 只建议，不动手。** 这是产品的骨气，也是官网上必须反复出现的一句话。
 4. **不引入境外 CDN 与 Web 字体。**
 5. **不加统计脚本。** 页脚已经写明「本站不收集任何数据」，就得是真的。
+6. **预览页不许冒充可用的应用。** `/app/` 是静态的，页面里要明说，下载区也要明说 ——
+   一旦让人以为「装了才知道原来网页版也能用」，这条就破了。
 
 ## 许可
 
