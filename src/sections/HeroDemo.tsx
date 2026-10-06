@@ -166,7 +166,7 @@ export function HeroDemo() {
             <span>
               这一张 {drawn.weight.toFixed(1)} 分，占全池 {totalWeight.toFixed(1)} 分里的{' '}
               {(chance * 100).toFixed(0)}%。
-              {misses >= 2 ? '继续抽，它跑不掉。' : '再抽一张。'}
+              {misses >= 2 ? '继续抽抽' : '再抽一张。'}
             </span>
           </>
         ) : (
