@@ -43,7 +43,11 @@ export const APK_SIZE_LABEL = (APK_BYTES / 1024 / 1024).toFixed(1) + ' MB';
 export type Uptime = {
   /** 整天天数 */
   days: number;
-  /** 当前这一分钟里走过的秒数（0–59）—— 就是那个每秒在跳的数字 */
+  /**
+   * 当天已经走过的秒数（0–86399）—— 就是那个每秒在跳的数字。
+   * 注意是「满天进一」而不是「满分钟进一」：它不会在 59 秒时归零，
+   * 而是一路数到 86399，等跨过午夜才把天数 +1、自己回到 0。
+   */
   seconds: number;
   totalSeconds: number;
 };
@@ -53,13 +57,12 @@ export function elapsedSince(start = RUN_SINCE, now = Date.now()): Uptime {
   const totalSeconds = Math.max(0, Math.floor((now - start) / 1000));
   return {
     days: Math.floor(totalSeconds / 86400),
-    seconds: totalSeconds % 60,
+    seconds: totalSeconds % 86400,
     totalSeconds,
   };
 }
 
-/** 秒补零，否则等宽字体下 9 → 10 会多跳一格 */
 export function formatUptime(u: Uptime): string {
-  return `已运行 ${u.days} 天 ${String(u.seconds).padStart(2, '0')} 秒`;
+  return `已运行 ${u.days} 天 ${u.seconds} 秒`;
 }
 
