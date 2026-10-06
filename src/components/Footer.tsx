@@ -15,10 +15,10 @@ export function Footer() {
             <img src="./mascot-192.png" alt="记忆库图标上的角色" width={96} height={96} loading="lazy" />
             <div>
               <p className="foot-cat-name">
-                图标上的这位
+                她是一只，可长期用的
                 <span className="mono">{uptime}</span>
               </p>
-              <p className="foot-cat-line">白天睡觉，晚上守着你的数据。</p>
+              <p className="foot-cat-line">只属于你的专属数据库喵</p>
             </div>
           </div>
 

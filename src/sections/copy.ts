@@ -90,8 +90,10 @@ export const SPECS: { k: string; v: string; accent?: 'pink' | 'cyan' | 'yellow' 
   { k: '埋点', v: '零。我们也只是陌生人罢了，前世五百次的回眸，才换来今生的擦肩而过。' },
 ];
 
-export const MAKER: { k: string; v: string; href?: string }[] = [
+export const MAKER: { k: string; v: string; href?: string; sub?: string }[] = [
   { k: '作者', v: '人' },
+  { k: '个人介绍', v: '诺贝尔奖关注者，文学奖读者' },
+  { k: '当前状况', v: '高一牲' },
   { k: '为什么做', v: '自己要用' },
   { k: '更新频率', v: '看心情' },
   {
@@ -99,10 +101,15 @@ export const MAKER: { k: string; v: string; href?: string }[] = [
     v: 'blog.8765777.xyz',
     href: 'https://blog.8765777.xyz',
   },
+  {
+    k: 'GitHub',
+    v: 'github.com/sideonkeibulllll',
+    href: 'https://github.com/sideonkeibulllll',
+  },
 ];
 
 export const INSTALL_STEPS = [
-  '点上面的按钮。13 MB 左右，几秒钟的事。',
+  '点上面的按钮。下载apk',
   '手机会提示「未知来源」——允许就行。它没上应用商店，所以系统不认识它。',
-  '装完直接用。第一次打开会慢一点，它正在你手机里建自己的库。',
+  '装好之后，拿起小手手点击应用，就可以开始使用啦',
 ];

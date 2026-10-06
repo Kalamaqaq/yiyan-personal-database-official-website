@@ -1,5 +1,6 @@
 import { Reveal } from '../components/Reveal';
 import { Star, DotCluster } from '../components/Geo';
+import scriptMotto from '../assets/script-motto.svg?raw';
 import './Closing.css';
 
 export function Closing() {
@@ -17,8 +18,25 @@ export function Closing() {
             没了。
           </Reveal>
         </h2>
+
         <Reveal delay={240}>
-          <p className="closing-sub">一个自己用的东西，顺手放上来。不下也不影响什么。</p>
+          <p className="closing-sub">喜欢一个事情就勇敢去做罢</p>
+        </Reveal>
+
+        {/* 花体英文：字形已转成 SVG 路径，不依赖任何字体文件 */}
+        <Reveal delay={320}>
+          <div
+            className="closing-script"
+            role="img"
+            aria-label="Don't care about the worldly gaze, pursue your own light"
+            dangerouslySetInnerHTML={{ __html: scriptMotto }}
+          />
+        </Reveal>
+
+        <Reveal delay={400}>
+          <p className="closing-sub closing-sub-cn">
+            不必在意世俗的眼光，去追寻属于你自己的光。
+          </p>
         </Reveal>
       </div>
     </section>

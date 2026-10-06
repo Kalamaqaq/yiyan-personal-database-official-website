@@ -42,6 +42,8 @@ export const LINKS = {
   websiteRepo:
     'https://github.com/sideonkeibulllll/yiyan-personal-database-official-website',
   issues: 'https://github.com/sideonkeibulllll/yiyan-personal-database/issues',
+  /** 作者的 GitHub 主页（不是仓库）—— 名片上「找我」用这个 */
+  github: 'https://github.com/sideonkeibulllll',
   /** 作者平时写字的地方，比 GitHub 更适合「想找到人」这件事 */
   blog: 'https://blog.8765777.xyz',
 };

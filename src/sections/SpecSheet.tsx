@@ -27,10 +27,10 @@ export function SpecSheet() {
 
         <h2 className="h2 spec-title">
           <Reveal tag="span" mask className="line">
-            参数摆在这，
+            极致优化＋实用主义．
           </Reveal>
           <Reveal tag="span" mask className="line" delay={120}>
-            不用你猜。
+            长期用，不卡顿
           </Reveal>
         </h2>
 

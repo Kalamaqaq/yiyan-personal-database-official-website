@@ -32,7 +32,13 @@ export function Maker() {
         <Reveal delay={100} className="card-maker-wrap">
           <div className="card-maker">
             <div className="mk-face">
-              <img src="./mascot-192.png" alt="作者的头像" width={128} height={128} loading="lazy" />
+              <img
+                src="https://blogr2.8765777.xyz/assets/my/7590A261E0E39A642ABF4873E89EAFF9.jpg"
+                alt="作者的头像"
+                width={128}
+                height={128}
+                loading="lazy"
+              />
               <span className="mk-face-cap mono">{uptime}</span>
             </div>
 
@@ -47,7 +53,10 @@ export function Maker() {
                           {m.v} ↗
                         </a>
                       ) : (
-                        m.v
+                        <>
+                          {m.v}
+                          {m.sub && <span className="mk-sub">{m.sub}</span>}
+                        </>
                       )}
                     </dd>
                   </div>
