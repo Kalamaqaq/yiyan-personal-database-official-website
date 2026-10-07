@@ -140,10 +140,10 @@ async function buildHtml() {
     <title>记忆库 · 界面预览</title>
     <meta name="description" content="记忆库 Android 版界面的静态预览。看不到逻辑，只看得见长相。" />
     <meta name="robots" content="noindex" />
-    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
-    <link rel="stylesheet" href="./app.css" />
-    <link rel="stylesheet" href="./demo.css" />
-  </head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/app/app.css" />
+    <link rel="stylesheet" href="/app/demo.css" />
+</head>
   <body>
 ${blocks.join('\n')}
 
@@ -153,7 +153,7 @@ ${blocks.join('\n')}
         <span class="pv-badge">界面预览</span>
         <h2 class="pv-title" id="pvTitle">这里只有长相，没有逻辑</h2>
         <p class="pv-text">下面这 7 屏是从 Android 版真实抓下来的界面，<b>数据是编的，按钮按下去不会真的干活</b>。点底部图标或首页快捷卡片可以切页；Chat 那屏要从左上角菜单展开侧栏、再点「退出」才能回来。</p>
-        <a class="pv-btn pv-btn-main" href="../download/${apk.file}" download>
+        <a class="pv-btn pv-btn-main" href="/download/${apk.file}" download>
           下载 APK · ${apk.label}
         </a>
         <button class="pv-btn pv-btn-ghost" id="pvGo" type="button">先看看界面</button>
@@ -161,7 +161,7 @@ ${blocks.join('\n')}
       </div>
     </div>
     <button class="pv-reopen" id="pvReopen" type="button" title="界面预览说明" aria-label="界面预览说明" hidden>?</button>
-    <script src="./demo.js"></script>
+    <script src="/app/demo.js"></script>
   </body>
 </html>
 `;
