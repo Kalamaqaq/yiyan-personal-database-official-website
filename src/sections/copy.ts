@@ -10,7 +10,7 @@
  */
 
 export const HERO = {
-  badge: ['高一牲手搓', '12.5 MB', '完全免费'],
+  badge: ['高一牲手搓', '12.6 MB', '完全免费'],
   title: ['扔进来，', '然后忘掉它。'],
   sub: [
     '我一直认为,个人的成长,不一定要结构化的笔记,不一定要书面化的语言',
@@ -69,7 +69,7 @@ export const SIX: { no: string; title: string; body: string; own: string }[] = [
 ];
 
 export const SPECS: { k: string; v: string; accent?: 'pink' | 'cyan' | 'yellow' }[] = [
-  { k: '体积', v: '12.5 MB。启动速度 0.5s（至少在我老人机上）。', accent: 'yellow' },
+  { k: '体积', v: '12.6 MB。启动速度 0.5s（至少在我老人机上）。', accent: 'yellow' },
   { k: '账号', v: '没有。装完直接用。' },
   {
     k: '网络',

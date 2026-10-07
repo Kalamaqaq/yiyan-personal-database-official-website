@@ -6,16 +6,16 @@
  */
 
 /** 当前发布的 App 版本（换版本号时这是第一处要改的） */
-export const APP_VERSION = '2.7.3';
+export const APP_VERSION = '2.8.0';
 
 /** 主仓库 release/ 下的最新签名包 */
-export const APK_FILE = 'yiyan-personal-database-v2.7.3-release.apk';
+export const APK_FILE = 'yiyan-personal-database-v2.8.0-release.apk';
 
-/** 13,156,110 字节（sha256sum 实测） */
-export const APK_BYTES = 13156110;
+/** 13,161,812 字节（sha256sum 实测） */
+export const APK_BYTES = 13161812;
 
 export const APK_SHA256 =
-  '096dcebc51d9deb13d303c8963044992de0f6d150ee5cf06aaa7ca41c4aea0ec';
+  '492de13d05b1e596d379f064011dc746a0ce5e6d8d46a8eb20a2be7d30cbff75';
 
 /** 本站直链（Vercel 静态托管） */
 export const APK_URL_PRIMARY = `./download/${APK_FILE}`;
