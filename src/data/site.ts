@@ -28,8 +28,16 @@ export const APK_URL_PRIMARY = `./download/${APK_FILE}`;
  * （实测 `cf-cache-status: HIT`）。把版本号拼进 query 当缓存键，每次发新版都是全新 URL，
  * 既绕开旧 404，也让它永远撞不上。
  *
- * 注意 APP_VERSION 必须声明在这行之前，否则 TS2448（用过才知道疼）。 */
-export const APK_URL_MIRROR = `https://yiyanr2.8765777.xyz/app/${APK_FILE}?v=${APP_VERSION}`;
+ * 注意 APP_VERSION 必须声明在这行之前，否则 TS2448（用过才知道疼）。
+ *
+ * ⚠️ 2026-10-07 追加常量 `s=${APK_BYTES}`：
+ * 光有版本号还不够。**镜像包往往比官网晚几小时才上传**——这中间只要有人点过
+ * 「备用镜像」，浏览器就把那个 404 连同 `max-age=14400` 一起缓存了，
+ * 等包传上去他再点还是 404（实测踩过，主人自己的浏览器就是这样）。
+ * 把字节数也拼进 key：每次重新构建包体积必然变化，等于强制换一个全新 URL，
+ * 缓存里的旧 404 永远撞不上，而 `?v=` 那份历史缓存键也照旧生效。 */
+export const APK_URL_MIRROR =
+  `https://yiyanr2.8765777.xyz/app/${APK_FILE}?v=${APP_VERSION}&s=${APK_BYTES}`;
 
 /**
  * 计时起点。页面上的「已运行 N 天 SS 秒」就是从这个时刻开始数的，每秒跳一次。
