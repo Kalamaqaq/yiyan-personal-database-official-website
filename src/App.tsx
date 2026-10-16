@@ -3,6 +3,7 @@ import { Footer } from './components/Footer';
 import { ScrollProgress } from './components/ScrollProgress';
 import { Hero } from './sections/Hero';
 import { SixThings } from './sections/SixThings';
+import { Journey } from './sections/Journey';
 import { SpecSheet } from './sections/SpecSheet';
 import { Maker } from './sections/Maker';
 import { DownloadSection } from './sections/Download';
@@ -14,6 +15,7 @@ import { Closing } from './sections/Closing';
  * 顺序即说服路径：
  *   一句钩子 + 一台能亲手玩的抽卡机（Hero）
  *   → 它其实是六个小工具（具体动作，不讲立场）
+ *   → 八十七天（把这段路压成四个数，然后放行 —— 故事在 ./history/）
  *   → 参数摆在这，不用你猜（规格表，替代「我不做什么」）
  *   → 谁做的（一张名片，替代那封煽情信）
  *   → 拿去用
@@ -30,6 +32,7 @@ export function App() {
       <main>
         <Hero />
         <SixThings />
+        <Journey />
         <SpecSheet />
         <Maker />
         <DownloadSection />

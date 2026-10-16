@@ -113,3 +113,30 @@ export const INSTALL_STEPS = [
   '手机会提示「未知来源」——允许就行。它没上应用商店，所以系统不认识它。',
   '装好之后，拿起小手手点击应用，就可以开始使用啦',
 ];
+
+/**
+ * 八十八天 · 首页入口
+ *
+ * 四个数就够了。多一个都是噪音。
+ * 「行代码」放最后 —— 五万五千行是这一屏里最响的一下。
+ */
+export const JOURNEY: {
+  eyebrow: string;
+  title: string;
+  sub: string;
+  stats: { value: string; label: string; note: string }[];
+  cta: string;
+  hint: string;
+} = {
+  eyebrow: '它长到现在用了多久',
+  title: '八十八天。',
+  sub: '7 月 22 日下午写下第一行，10 月 17 日凌晨发到 v3.5.0。中间发生了什么，都收在里面了。',
+  stats: [
+    { value: '88', label: '天', note: '7 月 22 日 → 10 月 17 日' },
+    { value: '180', label: '个源文件', note: '从 30 个开始' },
+    { value: '61', label: '个版本', note: '另有 4 版只活在 release 文件夹' },
+    { value: '55,184', label: '行代码', note: '从 3,283 行开始' },
+  ],
+  cta: '看看它是怎么长出来的',
+  hint: '六幕 · 从第一行到今天',
+};

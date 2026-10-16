@@ -3,11 +3,13 @@ import { APP_VERSION } from '../data/site';
 import { useUptimeLabel } from '../hooks/useUptime';
 import './TopBar.css';
 
+/** ext: true 表示跳到本站的独立页面（/history/），不是页内锚点 */
 const NAV = [
-  { href: '#things', label: '能干什么' },
-  { href: '#specs', label: '参数' },
-  { href: '#maker', label: '谁做的' },
-  { href: '#download', label: '下载' },
+  { href: '#things', label: '能干什么', ext: false },
+  { href: '#specs', label: '参数', ext: false },
+  { href: '#maker', label: '谁做的', ext: false },
+  { href: '#download', label: '下载', ext: false },
+  { href: './history/', label: '诞生记', ext: true },
 ];
 
 /** 站标：三个几何块叠一叠，比任何图标都更像孟菲斯 */
@@ -45,8 +47,9 @@ export function TopBar() {
 
         <nav className="top-nav" aria-label="站内导航">
           {NAV.map((n) => (
-            <a key={n.href} href={n.href}>
+            <a key={n.href} href={n.href} className={n.ext ? 'is-ext' : undefined}>
               {n.label}
+              {n.ext && <span className="ar">→</span>}
             </a>
           ))}
         </nav>
@@ -56,6 +59,10 @@ export function TopBar() {
             <i className="dot" />
             {uptime}
           </span>
+          <a className="top-journey mono" href="./history/" title="从第一行代码到 v3.4.0 的八十七天">
+            诞生记
+            <span className="ar">→</span>
+          </a>
           <a className="top-cta" href="#download">
             下载
           </a>

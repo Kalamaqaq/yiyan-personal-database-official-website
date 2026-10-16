@@ -1,0 +1,188 @@
+/* ==========================================================================
+   八十七天 · 规模快照 + 诞生记入口
+   --------------------------------------------------------------------------
+   这一屏的活儿只有一件：把八十七年压成四个数，然后放行。
+   视觉上沿用全站的孟菲斯件：面板色 + 白色硬描边 + 彩色硬阴影 + 微旋转。
+   ========================================================================== */
+
+.journey {
+  position: relative;
+  overflow: hidden;
+}
+
+/* —— 背景漂浮几何件 —— */
+.jr-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.jr-deco .jd {
+  position: absolute;
+  opacity: 0.15;
+  animation: jrFloat 9s ease-in-out infinite;
+}
+
+.jd1 {
+  top: 7%;
+  left: 2%;
+}
+.jd2 {
+  top: 16%;
+  right: 5%;
+  animation-delay: 0.9s;
+}
+.jd3 {
+  bottom: 12%;
+  left: 7%;
+  animation-delay: 1.8s;
+}
+.jd4 {
+  bottom: 7%;
+  right: 11%;
+  animation-delay: 2.7s;
+}
+
+@keyframes jrFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -15px, 0) rotate(7deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jr-deco .jd {
+    animation: none;
+  }
+}
+
+.jr-in {
+  position: relative;
+  z-index: 1;
+}
+
+.jr-title {
+  margin-top: 12px;
+}
+
+.jr-title .line {
+  display: block;
+}
+
+.jr-sub {
+  margin-top: 14px;
+  max-width: 62ch;
+}
+
+/* —— 四个大数 —— */
+.jr-grid {
+  margin-top: 44px;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.jr-card {
+  height: 100%;
+}
+
+.jr-inner {
+  position: relative;
+  height: 100%;
+  padding: 28px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  border: 2.5px solid var(--ink);
+  border-radius: var(--r-card);
+  background: var(--panel);
+  box-shadow: 6px 6px 0 var(--sh, var(--sh-pink));
+  transform: rotate(var(--tilt, 0deg));
+  transition:
+    transform 0.18s var(--pop),
+    box-shadow 0.18s var(--pop);
+}
+
+/* 光泽：左上角一道斜高光，和全站按钮同一套处理 */
+.jr-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    112deg,
+    rgba(255, 255, 255, 0.16) 0 11%,
+    rgba(255, 255, 255, 0) 11.5% 100%
+  );
+  pointer-events: none;
+}
+
+.jr-inner:hover {
+  transform: rotate(0deg) translate(-2px, -2px);
+  box-shadow: 10px 10px 0 var(--sh, var(--sh-pink));
+}
+
+.jr-val {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-shadow: 3px 3px 0 var(--sh, var(--sh-pink));
+}
+
+.jr-label {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+.jr-note {
+  font-size: 11px;
+  color: var(--ink-3);
+  line-height: 1.55;
+}
+
+/* —— 入口 —— */
+.jr-go {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.jr-btn .ar {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  opacity: 0.72;
+  transition: transform 0.2s var(--pop);
+}
+
+.jr-btn:hover .ar {
+  transform: translateX(3px);
+}
+
+.jr-hint {
+  font-size: 11.5px;
+  color: var(--ink-4);
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 880px) {
+  .jr-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 430px) {
+  .jr-grid {
+    grid-template-columns: 1fr;
+  }
+}

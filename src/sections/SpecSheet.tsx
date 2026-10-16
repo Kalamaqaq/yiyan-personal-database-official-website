@@ -20,7 +20,7 @@ export function SpecSheet() {
       <div className="shell">
         <Reveal>
           <span className="eyebrow">
-            <span className="no">03</span>
+            <span className="no">04</span>
             <em>参数</em>
           </span>
         </Reveal>

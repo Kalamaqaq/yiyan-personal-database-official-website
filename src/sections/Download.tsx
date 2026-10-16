@@ -64,7 +64,7 @@ export function DownloadSection() {
       <div className="shell">
         <Reveal>
           <span className="eyebrow">
-            <span className="no">05</span>
+            <span className="no">06</span>
             <em>下载</em>
           </span>
         </Reveal>
