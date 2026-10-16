@@ -2,12 +2,19 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/history/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>记忆库 · 诞生记 | 从 0 到 v3.4.0 的八十七天</title>
     <meta name="description" content="一个装在手机里的私人记忆库，从 2026 年 7 月 22 日的第一行代码，到 10 月 16 日的 v3.4.0。" />
-    <script type="module" crossorigin src="./assets/index-CEZiquuW.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Cswk33oh.css">
+
+    <!--
+      资源必须用绝对路径 /history/... ，不能用 ./assets/...。
+      原因：vercel.json 的 trailingSlash:false 会把 /history/ 308 重定向成 /history，
+      此时 ./ 的解析基准变成了站点根，./assets/x.js 会被请求成 /assets/x.js → 404 → 白屏。
+      （同站的 /app/ 页面一直用绝对路径，所以它没事。）
+    -->
+    <script type="module" crossorigin src="/history/assets/index-CEZiquuW.js"></script>
+    <link rel="stylesheet" crossorigin href="/history/assets/index-Cswk33oh.css">
   </head>
   <body>
     <div id="root"></div>
